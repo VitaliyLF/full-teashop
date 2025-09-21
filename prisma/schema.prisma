@@ -7,3 +7,182 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  // Обязательные поля
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String  @unique
+  // пароль необязательный потому что есть возможность авторизации через гугл и яндекс
+  password String?
+  name     String  @default("Не указано")
+  // аватарка юзера по дефолту будет вставлять какую то картинку 
+  picture  String  @default("/uploads/no-user-images.png")
+
+  // Связи
+  // у юзера может быть несколько магазинов указываем как массив
+  store Store[]
+
+  // избранные продукты
+  favorites Product[]
+  // юзер может оставлять отзывы
+  reviews   Review[]
+  // у юзера могут быть конкретные заказы
+  orders    Order[]
+
+  // именовать модели в бд лучше с маленькой буквы и через нижнее подчеркивание
+  @@map("user")
+}
+
+// мы можем создавать много магазинов на нашем сайте поэтому описываем модель Store
+model Store {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title       String
+  description String?
+  // Связи
+
+  // призма автоматически прописыват связь если мы ее указали в другой модели
+  user   User?   @relation(fields: [userId], references: [id])
+  // один магазин будет привязан к конкретному пользователю, а к пользователю может быть несколько магазинов
+  userId String? @map("user_id")
+
+  // у магазина может быть множество категорий продуктов цветов и отзывов
+  products   Product[]
+  category   Category[]
+  colors     Color[]
+  reviews    Review[]
+  orderItems OrderItem[]
+
+  @@map("store")
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title       String
+  description String
+  price       Int
+  // у нас может быть массив картинок у одного товара
+  images      String[]
+  // у продукта может быть множество отзывов
+  reviews     Review[]
+  // собираем статистику и потом будем ее выводить
+  orderItems  OrderItem[]
+
+  store      Store?    @relation(fields: [storeId], references: [id])
+  storeId    String?   @map("store_id")
+  // у одного продукта может быть одна категория
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @map("category_id")
+  // у одного продукта может быть только 1 цвет
+  color      Color?    @relation(fields: [colorId], references: [id])
+  colorId    String?   @map("color_id")
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     String?   @map("user_id")
+
+  @@map("product")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  title       String
+  description String
+  // у одной категории может быть несколько продуктов
+  products    Product[]
+  store       Store?    @relation(fields: [storeId], references: [id])
+  storeId     String?   @map("store_id")
+
+  @@map("category")
+}
+
+model Color {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name  String
+  value String
+
+  products Product[]
+  store    Store?    @relation(fields: [storeId], references: [id])
+  storeId  String?   @map("store_id")
+
+  @@map("color")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  text   String
+  rating Int
+
+  // у одного отзыва может быть только 1 юзер
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @map("user_id")
+  // у одного отзыва может быть только 1 продукт
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+  // у одного отзыва может быть только 1 магазин
+  store     Store?   @relation(fields: [storeId], references: [id])
+  storeId   String?  @map("store_id")
+
+  @@map("review")
+}
+
+// Сам заказ
+model Order {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // будет enum
+  status EnumOrderStatus @default(PENDING)
+  // может быть много продуктов в заказе
+  items  OrderItem[]
+  total  Int
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  @@map("order")
+}
+
+// Заказ самих продуктов
+model OrderItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // кол-во
+  quantity Int
+  price    Int
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @map("order_id")
+
+  store   Store?  @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  @@map("order_item")
+}
+
+// Описание enum в prisma
+enum EnumOrderStatus {
+  PENDING
+  PAYED
+}
