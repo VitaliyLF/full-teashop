@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  // output нужно убрать чтобы при генерации типов через команду npx prisma generate все уходило в нод модули а по дефолту указан кастомный путь 
+  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -23,7 +24,7 @@ model User {
 
   // Связи
   // у юзера может быть несколько магазинов указываем как массив
-  store Store[]
+  stores Store[]
 
   // избранные продукты
   favorites Product[]

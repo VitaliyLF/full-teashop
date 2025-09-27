@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module'
+import { UserModule } from './user/user.module'
 
 @Module({
-  // imports: [], // сюда подключаются другие модули (например, UsersModule, AuthModule)
+  // imports: [], // сюда подключаются другие модули (например, UsersModule, AuthModule) когда их создаем через nest g res user --no-spec
   // controllers: [AppController], // сюда подключаются контроллеры
-  // providers: [AppService]s // сюда подключаются сервисы
+  // providers: [AppServices] // сюда подключаются сервисы
   imports: [ConfigModule.forRoot(), AuthModule, UserModule] // чтобы читать env значения
 })
 export class AppModule {}
