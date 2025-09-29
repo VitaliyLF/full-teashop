@@ -35,6 +35,8 @@ export class AuthService {
     // Дальше генерируем токены
     const tokens = this.issueTokens(user.id)
 
+    // при регистрации когда клиент будет в теле body запроса отправлять данные после всех проверок выше
+    // если все хорошо вернем из метода register юзера с его полями и токены
     return { user, ...tokens }
   }
 
