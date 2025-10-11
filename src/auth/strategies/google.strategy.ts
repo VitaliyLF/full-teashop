@@ -56,6 +56,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const { displayName, emails, photos } = profile
 
     // создаю user и в него закидываю все что из гугла взял
+    // создаем юзера с данными из гугла для того чтобы потом обратиться к объекту user
+    // когда гугл перекинет юзера после успешной авторизации и подтверждением юзера что он согласен дать данные свои тогда юзера перекинет по '/auth/google/callback',
     const user = {
       // берем первый email из настроек юзера
       emails: emails?.[0].value,
