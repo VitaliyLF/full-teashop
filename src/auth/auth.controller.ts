@@ -2,17 +2,21 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
   Req,
   Res,
   UnauthorizedException,
+  UseGuards,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { AuthDto } from './dto/auth.dto'
 import type { Request, Response } from 'express'
+import { GoogleAuthGuard } from './guards/google-auth.guard'
+import { YandexAuthGuard } from './guards/yandex-auth.guard'
 
 // Контроллер — это класс, который отвечает за обработку HTTP-запросов от клиента.
 // Проще говоря: контроллер — это «входная дверь» в серверную логику.
@@ -184,4 +188,55 @@ export class AuthController {
   }
 
   // описание контроллеров от гугл и яндекса
+  // /auth/google на него будет переадрисосывать User когда он будет нажимать на кнопку авторизации
+  @Get('google')
+  // @UseGuards Его основная задача — решать, можно ли пользователю продолжить выполнение запроса (т.е. разрешить доступ к контроллеру или нет).
+  // UseGuards своего рода защита маршрута которую нужно пройти чтобы дальше выполнился запрос
+  // «Прежде чем выполнять метод контроллера @Get('google'), проверь условия в Guard. Если Guard разрешит — продолжай. Если нет — верни ошибку (например, 401 Unauthorized).»
+  // Если он вернёт true → Nest пускает запрос дальше (метод контроллера выполняется).
+  // Если он вернёт false или выбросит исключение → Nest останавливает запрос (контроллер не вызывается).
+
+  // 1) Когда запрос от клиента попадает на этот маршрут /auth/google, NestJS вызывает Guard — AuthGuard('google').
+  // Это Guard из пакета @nestjs/passport, который связан с GoogleStrategy
+  // 2) Guard вызывает метод authenticate() у passport-google-oauth20 стратегии.
+  // 3) Эта стратегия перенаправляет пользователя на страницу входа Google, добавив нужные параметры (client_id, redirect_uri, scope и т.д.).
+  // Guard перехватывает запрос и делает redirect на Google.
+  // После успешного логина Google редиректит обратно на твой сервер, на маршрут, который ты указал как redirect_uri, например:https://your-server.com/auth/google/callback
+  @UseGuards(GoogleAuthGuard)
+  async googleAuth(@Req() _req) {}
+
+  // метод
+  // тот url куда будет переадресовывать пользователя после того как user выберет аккаунт
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthCallback(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+    // от гугла приходит req с объектом и данными от пользователя и его email и проверяем через validateOAuthLogin
+    const { refreshToken, ...response } = await this.authService.validateOAuthLogin(req)
+
+    // при ответе в куку закидываем refreshToken и время жизни куки
+    this.authService.addRefreshTokenToResponse(res, refreshToken)
+
+    // после успешного вшития refreshToken и ответа перенаправляем пользователя на страницу dashboard
+    // в качестве query параметра указывать access token
+    // зачем это нужно? когда пользователя будет редеректить на dashboard страницу мы на клиенте в куки будет устанавливать accessToken
+    return res.redirect(
+      `${process.env['CLIENT_URL']}/dashboard?accessToken=${response.accessToken}`
+    )
+  }
+
+  @Get('yandex')
+  @UseGuards(YandexAuthGuard)
+  async yandexAuth(@Req() _req) {}
+
+  @Get('yandex/callback')
+  @UseGuards(YandexAuthGuard)
+  async yandexAuthCallback(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+    const { refreshToken, ...response } = await this.authService.validateOAuthLogin(req)
+
+    this.authService.addRefreshTokenToResponse(res, refreshToken)
+
+    return res.redirect(
+      `${process.env['CLIENT_URL']}/dashboard?accessToken=${response.accessToken}`
+    )
+  }
 }
