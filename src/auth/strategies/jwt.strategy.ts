@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       // ignoreExpiration — это опция в passport-jwt, которая управляет тем, проверяется ли срок действия токена (JWT) при валидации.
       ignoreExpiration: true,
-      // присваиваем нашу jwt в secretOrKey все это можно было и сразу написать то почемуто ругается ts
+      // присваиваем нашу jwt в secretOrKey все это можно было и сразу написать в объекте, не вынося в переменные, но почему то ругается ts
       secretOrKey: jwtSecret
     })
   }

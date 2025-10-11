@@ -20,6 +20,7 @@ export class AuthService {
     // Дальше генерируем токены
     const tokens = this.issueTokens(user.id)
 
+    // при логине добавляем в поле user еще и токены досутпа и обновления
     return { user, ...tokens }
   }
 
@@ -67,8 +68,6 @@ export class AuthService {
 
   // метод для валидации user
   private async validateUser(dto: AuthDto) {
-    // делаем проверку
-
     // получаем юзера по еmail который приходит из dto и кладем в метод
     const user = await this.userService.getByEmail(dto.email)
 

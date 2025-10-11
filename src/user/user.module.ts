@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service'
 
 @Module({
   controllers: [UserController],
-  // будем в этой модели использовать призу поэтому подключаем клиента
+  // будем в этой модели использовать призу поэтому подключаем клиента и методы из user.service
   providers: [UserService, PrismaService]
 })
 export class UserModule {}

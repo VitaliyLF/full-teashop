@@ -9,6 +9,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   // если убираем private тогда будем читать то что пришло в конструктор
   constructor(configService: ConfigService) {
     // делаем так из за типизации чтобы ts понимал что у нас строка
+    // получаем по ключу наши env
     const clientID = configService.get('GOOGLE_CLIENT_ID')
     const clientSecret = configService.get('GOOGLE_CLIENT_SECRET')
     const serverUrl = configService.get('SERVER_URL')
@@ -29,8 +30,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       // это url куда будет переадресовывать пользователя после авторизации через гугл
       // и прибавляем '/auth/google/callback' потом этот контроль опишем
       callbackURL: serverUrl + '/auth/google/callback',
-      //Когда пользователь логинится через Google, Google спрашивает у него разрешения, какие данные он готов предоставить твоему приложению.
+      // Когда пользователь логинится через Google, Google спрашивает у него разрешения, какие данные он готов предоставить твоему приложению.
       // scope определяет, какие именно данные твой сервис хочет получить.
+      // тут могут быть разные данные, день рождения аккаунта пользователя, аватарка, email, все индивидуально и зависит от сервиса
       scope: ['profile', 'email']
     })
   }
@@ -53,7 +55,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // это все когда пользователь авторизируется и соглашаеться с гугл авторизацией тогда мы можем из его гугл аккаунта брать эти вещи
     const { displayName, emails, photos } = profile
 
-    // разворачиваю user и в него закидываю все что из гугла
+    // создаю user и в него закидываю все что из гугла взял
     const user = {
       // берем первый email из настроек юзера
       emails: emails?.[0].value,
@@ -61,7 +63,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       picture: photos?.[0].value
     }
 
-    // когда успешно тогда вторым параметром указываем нашего юзера
+    // после успешной авторизации метод done, тогда вторым параметром указываем нашего юзера
     done(null, user)
   }
 }
