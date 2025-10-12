@@ -72,6 +72,7 @@ export class AuthController {
   // этот метод обрабатывает POST-запросы на /auth/login
   @Post('login')
   // при post запросе на /auth/login с клиента в body которые имеет dto поля мы возвращаем через метод login объект с полями
+  // почему при login идет post Запрос ? потому что при логине мы меняем состояние сервера, где тот в свою очередь возвращает refreshToken
 
   // возвращает результат клиенту
 
@@ -209,12 +210,22 @@ export class AuthController {
   // тот url куда будет переадресовывать пользователя после того как user выберет аккаунт
   @Get('google/callback')
   @UseGuards(GoogleAuthGuard)
-  async googleAuthCallback(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+  async googleAuthCallback(@Req() req, @Res({ passthrough: true }) res: Response) {
     // от гугла приходит req с объектом и данными от пользователя и его email и проверяем через validateOAuthLogin
     const { refreshToken, ...response } = await this.authService.validateOAuthLogin(req)
 
-    // при ответе в куку закидываем refreshToken и время жизни куки
+    // при ответе в куку в браузер закидываем refreshToken и время жизни куки
     this.authService.addRefreshTokenToResponse(res, refreshToken)
+
+    // ставим accessToken в куку на клиенте
+    // только так работает и если secure: true
+    res.cookie('accessToken', response.accessToken, {
+      httpOnly: false, // true если не нужно читать с JS
+      secure: true, // false в dev (HTTP), true в prod (HTTPS)
+      sameSite: 'none',
+      maxAge: 15 * 60 * 1000,
+      path: '/'
+    })
 
     // после успешного вшития refreshToken и ответа перенаправляем пользователя на страницу dashboard
     // в качестве query параметра указывать access token
@@ -230,10 +241,18 @@ export class AuthController {
 
   @Get('yandex/callback')
   @UseGuards(YandexAuthGuard)
-  async yandexAuthCallback(@Req() req: any, @Res({ passthrough: true }) res: Response) {
+  async yandexAuthCallback(@Req() req, @Res({ passthrough: true }) res: Response) {
     const { refreshToken, ...response } = await this.authService.validateOAuthLogin(req)
 
     this.authService.addRefreshTokenToResponse(res, refreshToken)
+
+    // res.cookie('accessToken', response.accessToken, {
+    //   httpOnly: false, // true если не нужно читать с JS
+    //   secure: true, // false в dev (HTTP), true в prod (HTTPS)
+    //   sameSite: 'none',
+    //   maxAge: 15 * 60 * 1000,
+    //   path: '/'
+    // })
 
     return res.redirect(
       `${process.env['CLIENT_URL']}/dashboard?accessToken=${response.accessToken}`

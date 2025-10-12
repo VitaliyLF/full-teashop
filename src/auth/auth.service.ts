@@ -201,6 +201,8 @@ export class AuthService {
     // указали дату жизни нашего токена, От текущего момента + 1 день
     expiresIn.setDate(expiresIn.getDate() + this.EXPIRE_DAY_REFRESH_TOKEN)
 
+    // const isProduction = this.configService.get('NODE_ENV') === 'production'
+
     // в куки указываем наше имя куки, refreshToken и настройки под куки
     res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
       // тем самым указываем что это именно серверная кука
@@ -210,7 +212,9 @@ export class AuthService {
       // указываем дату жизни куки, которую мы делали выше
       expires: expiresIn,
       // Этот флаг указывает браузеру, что кука может быть отправлена только по защищённому протоколу HTTPS.
+      // на проде должен быть true, на деве false
       secure: true,
+      // secure: false,
       // на продакшене нужно указывать lax а на деве none
 
       // lax
@@ -221,11 +225,16 @@ export class AuthService {
       // Кука всегда отправляется, даже при запросах с других доменов (например, фронтенд → API).
       // Нужно для SPA/Frontend, которые работают на другом домене или порту. Требует secure: true.
       sameSite: 'none'
+
+      // secure: isProduction,
+      // sameSite: isProduction ? 'lax' : 'none'
     })
   }
 
   // удаление токена при logout из системы
   removeRefreshTokenFromResponse(res: Response) {
+    // const isProduction = this.configService.get('NODE_ENV') === 'production'
+
     // в куки указываем наше имя куки, пустую строку для очистки и настройки под куки
     res.cookie(this.REFRESH_TOKEN_NAME, '', {
       // тем самым указываем что это именно серверная кука
@@ -236,6 +245,7 @@ export class AuthService {
       expires: new Date(0),
       // Этот флаг указывает браузеру, что кука может быть отправлена только по защищённому протоколу HTTPS.
       secure: true,
+      // secure: false,
       // на продакшене нужно указывать lax а на деве none
 
       // lax
@@ -246,6 +256,9 @@ export class AuthService {
       // Кука всегда отправляется, даже при запросах с других доменов (например, фронтенд → API).
       // Нужно для SPA/Frontend, которые работают на другом домене или порту. Требует secure: true.
       sameSite: 'none'
+
+      // secure: isProduction,
+      // sameSite: isProduction ? 'lax' : 'none'
     })
   }
 }

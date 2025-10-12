@@ -49,6 +49,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: Profile,
     done: VerifyCallback
   ) {
+    // console.log('Google profile:', JSON.stringify(profile, null, 2))
     // из профиля берем имя пользователя
     // массив emailов
     // и фотографии т.е аватарка пользователя
@@ -60,7 +61,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // когда гугл перекинет юзера после успешной авторизации и подтверждением юзера что он согласен дать данные свои тогда юзера перекинет по '/auth/google/callback',
     const user = {
       // берем первый email из настроек юзера
-      emails: emails?.[0].value,
+      email: emails?.[0].value,
       name: displayName,
       picture: photos?.[0].value
     }
