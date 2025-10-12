@@ -60,6 +60,45 @@ export class UserService {
     return user
   }
 
+  // Метод на добавление в избранное
+  // функционал добавления в избранное
+  // принимает продукт чтобы понимать что добавлять в избранное и юзера
+  async toggleFavorites(productId: string, userId: string) {
+    // получаем нашего юзера
+    const user = await this.getById(userId)
+
+    // делаем проверку на существование такого продукта в бд у юзера
+    // some проверяет, есть ли хотя бы один элемент массива, удовлетворяющий заданному условию.
+    // Если функция вернёт true хотя бы один раз, .some() сразу остановится и вернёт true.
+    const isExists = user?.favorites.some(product => product.id === productId)
+
+    // обновляем у юзера в бд
+    await this.prisma.user.update({
+      // ищем по id нашего юзера
+      where: {
+        id: user?.id
+      },
+      data: {
+        favorites: {
+          // в массиве favorites по ключу если есть такой продукт делаем его disconnect есть нет connect
+          // если у пользователя в массиве favorites есть уже продукт с таким id тогда удаляй его,
+          //   favorites: {
+          //   disconnect: { id: 'p2' }  // удаляем связь
+          // }
+          // еусли у пользователя нет такого товара то добавляй
+          // "favorites": [
+          //   { "id": "p1", "name": "iPhone 15" }
+          // ]
+          [isExists ? 'disconnect' : 'connect']: {
+            id: productId
+          }
+        }
+      }
+    })
+
+    return true
+  }
+
   // полностью цепочка создания юзера
   // 1) клиент отправляет http Запрос с body где есть поля для юзера на сервер
   // 2) на сервере есть контроллер который принимает этот запрос обрабатывает метод

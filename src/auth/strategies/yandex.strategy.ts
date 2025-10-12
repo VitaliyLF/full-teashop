@@ -24,12 +24,7 @@ export class YandexStrategy extends PassportStrategy(Strategy, 'yandex') {
     })
   }
 
-  async validate(
-    _accessToken: string,
-    _refreshToken: string,
-    profile: Profile,
-    done: any
-  ): Promise<any> {
+  async validate(_accessToken: string, _refreshToken: string, profile: Profile, done: any) {
     // console.log('yandex profile:', JSON.stringify(profile, null, 2))
 
     const { username, emails, photos } = profile

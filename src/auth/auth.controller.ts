@@ -219,13 +219,13 @@ export class AuthController {
 
     // ставим accessToken в куку на клиенте
     // только так работает и если secure: true
-    res.cookie('accessToken', response.accessToken, {
-      httpOnly: false, // true если не нужно читать с JS
-      secure: true, // false в dev (HTTP), true в prod (HTTPS)
-      sameSite: 'none',
-      maxAge: 15 * 60 * 1000,
-      path: '/'
-    })
+    // res.cookie('accessToken', response.accessToken, {
+    //   httpOnly: false, // true если не нужно читать с JS
+    //   secure: true, // false в dev (HTTP), true в prod (HTTPS)
+    //   sameSite: 'none',
+    //   maxAge: 15 * 60 * 1000,
+    //   path: '/'
+    // })
 
     // после успешного вшития refreshToken и ответа перенаправляем пользователя на страницу dashboard
     // в качестве query параметра указывать access token
