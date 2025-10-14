@@ -19,9 +19,10 @@ export class UserController {
   // Метод на добавление в избранное
   // делаем @Auth() потому что в избранное может добавлять только авторизированный пользователь
   @Auth()
+  // делаем Patch Запрос на частичное обновление ресурса по :productId
   @Patch('profile/favorites/:productId')
   // указываем декоратор @Param('productId') потому что с клиента будет прилетать параметр в url продукта и тут мы его забераем
-  async toggleFavorite(@CurrentUser('id') userId: string, @Param('productId') productId: string) {
+  async toggleFavorite(@Param('productId') productId: string, @CurrentUser('id') userId: string) {
     return this.userService.toggleFavorites(productId, userId)
   }
 }

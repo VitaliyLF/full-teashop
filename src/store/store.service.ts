@@ -40,14 +40,18 @@ export class StoreService {
   // метод на обновление магазина
   async update(storeId: string, userId: string, dto: UpdateStoreDto) {
     // находи наш store
-    await this.getById(userId, storeId)
+    await this.getById(storeId, userId)
 
     return this.prisma.store.update({
       where: {
         id: storeId
       },
       data: {
-        title: dto.title,
+        // ...dto это значит что все поля которые будут передаваться клиентом в dto будут попадать в бд
+        ...dto,
+        // или как ниже указываем только опредленные поля
+        // title: dto.title,
+        // description: dto.description,
         // устанавливает текущий id пользователя
         userId
       }
@@ -57,7 +61,7 @@ export class StoreService {
   // метод на удаление магазина
   async delete(storeId: string, userId: string) {
     // находи наш store
-    await this.getById(userId, storeId)
+    await this.getById(storeId, userId)
 
     return this.prisma.store.delete({
       where: {
