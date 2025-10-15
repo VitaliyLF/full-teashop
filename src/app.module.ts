@@ -9,6 +9,7 @@ import { StoreModule } from './store/store.module';
 import { OrderModule } from './order/order.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { ProductModule } from './product/product.module';
+import { ReviewModule } from './review/review.module';
 
 // модуль это точка входа тут все подключается чтобы использовать внутри
 // Это корневой модуль приложения.
@@ -17,6 +18,6 @@ import { ProductModule } from './product/product.module';
   // imports: [], // сюда подключаются другие модули (например, UsersModule, AuthModule) когда их создаем через nest g res user --no-spec
   // controllers: [AppController], // сюда подключаются контроллеры
   // providers: [AppServices] // сюда подключаются сервисы
-  imports: [ConfigModule.forRoot(), AuthModule, UserModule, ColorModule, CategoryModule, FileModule, StoreModule, OrderModule, StatisticsModule, ProductModule] // чтобы читать env значения
+  imports: [ConfigModule.forRoot(), AuthModule, UserModule, ColorModule, CategoryModule, FileModule, StoreModule, OrderModule, StatisticsModule, ProductModule, ReviewModule] // чтобы читать env значения
 })
 export class AppModule {}
