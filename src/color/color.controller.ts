@@ -21,7 +21,7 @@ export class ColorController {
   // Метод для получения цветов для конкрентного магазина чтобы их выводить в панеле управления магазина для каждого пользователя
   // Получим все цвета которые есть у магазина
   @Auth()
-  // получаем с помощью get и указываем динамическое значение /:storeId - это динамический параметр Id нашего цвета
+  // получаем с помощью get и указываем динамическое значение /:storeId - это динамический сегмент пути Id нашего цвета
   @Get('by-storeId/:storeId')
   async getByStoreId(@Param('storeId') storeId: string) {
     return this.colorService.getByStoreId(storeId)
@@ -29,6 +29,7 @@ export class ColorController {
 
   // получение по id цвет
   // получать цвет может только авторизованный пользователь
+  // обязательно указывает динамический сегмент пути :id
   @Auth()
   @Get('by-id/:id')
   async getById(@Param('id') id: string) {
@@ -43,7 +44,7 @@ export class ColorController {
   @HttpCode(200)
   // только авторизированный пользователь может создавать цвета
   @Auth()
-  // получаем в url динамический storeId магазина
+  // получаем в url динамический сегмент пути - storeId магазина
   @Post(':storeId')
   // указываем в параметрах нашу dto
   async create(@Param('storeId') storeId: string, @Body() dto: ColorDto) {
@@ -58,7 +59,7 @@ export class ColorController {
   // будет put запрос на полную замену ресурса и указываем параметр :id
   @Put(':id')
   // указываем в параметрах юзера и нашу dto
-  // указываем в  @Param('id') обязательно нужное нам поле а не весь объект
+  // указываем в  @Param('id') динамический сегмент пути по которому мы меняем весь объект цвета
   async update(@Param('id') id: string, @Body() dto: ColorDto) {
     return this.colorService.update(id, dto)
   }

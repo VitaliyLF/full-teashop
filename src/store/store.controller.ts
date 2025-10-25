@@ -23,7 +23,7 @@ export class StoreController {
   // получени по id магазина
   // получать магазин может только авторизованный пользователь
   @Auth()
-  // получаем с помощью get и указываем динамическое значение /:id - это динамический параметр Id нашего магазина
+  // получаем с помощью get и указываем динамический сегмент пути /:id - это динамический параметр Id нашего магазина
   @Get('by-id/:id')
   async getById(@Param('id') storeId: string, @CurrentUser('id') userId: string) {
     return this.storeService.getById(storeId, userId)
@@ -53,7 +53,7 @@ export class StoreController {
   // будет put запрос на полную замену ресурса и указываем параметр :id
   @Put(':id')
   // указываем в параметрах юзера и нашу dto
-  // указываем в  @Param('id') обязательно нужное нам поле а не весь объект
+  // указываем в  @Param('id') и обновляет весь ресурс
   async update(
     @Param('id') storeId: string,
     @CurrentUser('id') userId: string,
