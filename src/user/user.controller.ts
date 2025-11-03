@@ -21,7 +21,7 @@ export class UserController {
   @Auth()
   // делаем Patch Запрос на частичное обновление ресурса по :productId
   @Patch('profile/favorites/:productId')
-  // указываем декоратор @Param('productId') потому что с клиента будет прилетать параметр в url продукта и тут мы его забераем
+  // указываем декоратор @Param('productId') потому что с клиента будет прилетать параметр в url продукта и тут мы его забираем
   async toggleFavorite(@Param('productId') productId: string, @CurrentUser('id') userId: string) {
     return this.userService.toggleFavorites(productId, userId)
   }

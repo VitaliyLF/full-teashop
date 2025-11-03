@@ -7,14 +7,14 @@ export class ProductService {
   constructor(private prisma: PrismaService) {}
 
   // Метод на получение всех продуктов
-  // параметром принимает query параметр
+  // параметром принимает query параметр (searchTerm - поисковой запрос)
   async getAll(searchTerm?: string) {
     // если есть query параметр тогда вызываем функцию фультра по этому параметру
     if (searchTerm) return this.getSearchTermFilter(searchTerm)
 
     // ищем продукты в бд
     const products = await this.prisma.product.findMany({
-      // сортируем продукты по полю когда он создан desc не помню от меньшего к большему
+      // сортируем продукты по полю
       orderBy: {
         // desc = по убыванию
         createdAt: 'desc'
@@ -29,29 +29,34 @@ export class ProductService {
   }
 
   // метод для фильтрации по query параметру
-  private getSearchTermFilter(searchTerm: string) {
-    return {
-      // OR в Prisma — это логический оператор для объединения нескольких условий,
-      OR: [
-        {
-          // поиск будет происходит по title
-          title: {
-            // по чему будет просходить поиск
-            contains: searchTerm,
-            // указываем mode чтобы не зависило от регистра происходил поиск
-            mode: 'insensitive'
+  private async getSearchTermFilter(searchTerm: string) {
+    return this.prisma.product.findMany({
+      where: {
+        // OR в Prisma — это логический оператор для объединения нескольких условий,
+        // тут говорим что поиск будет происходить по колонкам в бд либо title либо description
+        OR: [
+          {
+            // поиск будет происходит по title и description колонкам в бд если есть хоть одно слово там найдем нам продукты
+            title: {
+              // указываем если в title колонке содержиться слово из query параметра который приходит
+              contains: searchTerm,
+              // указываем mode чтобы не зависило от регистра происходил поиск
+              mode: 'insensitive'
+            }
           },
-          // поиск будет происходит по описанию
-          description: {
-            contains: searchTerm,
-            mode: 'insensitive'
+          {
+            description: {
+              // указываем если в title колонке содержиться слово из query параметра который приходит
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
           }
-        }
-      ]
-    }
+        ]
+      }
+    })
   }
 
-  // Метод для получения продукта по storeId
+  // Метод для получения продуктов по storeId
   async getByStoreId(storeId: string) {
     return this.prisma.product.findMany({
       where: {
@@ -65,7 +70,7 @@ export class ProductService {
     })
   }
 
-  // Метод получения продукта по id цвет
+  // Метод получения продукта по id
   async getById(productId: string) {
     const product = await this.prisma.product.findUnique({
       where: {
@@ -84,7 +89,7 @@ export class ProductService {
     return product
   }
 
-  // Метод для получения продукта по категории
+  // Метод для получения продукта по категориям
   async getByCategory(categoryId: string) {
     // делаем findMany потому что у продукта может быть 2 категории или больше
     const products = await this.prisma.product.findMany({
