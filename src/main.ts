@@ -15,6 +15,6 @@ async function bootstrap() {
     exposedHeaders: 'set-cookie' // Делаем заголовок 'set-cookie' доступным на фронте
   })
 
-  await app.listen(5000) // настройка порта, можно подключить из env и сделать ?? 500
+  await app.listen(5000) // настройка порта, можно подключить из env и сделать ?? 5000
 }
 bootstrap()

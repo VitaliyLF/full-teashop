@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 // имортируем юкасса
-import { YooCheckout } from '@a2seven/yoo-checkout'
+import { ICapturePayment, YooCheckout } from '@a2seven/yoo-checkout'
 import { OrderDto } from './dto/order.dto'
+import { PaymentStatusDto } from './dto/payment-status.dto'
+import { EnumOrderStatus } from '@prisma/client'
 
 // делаем проверку что у нас есть такие переменные
 if (!process.env.YOOKASSA_SHOP_ID || !process.env.YOOKASSA_SECRET_KEY) {
@@ -98,5 +100,51 @@ export class OrderService {
     })
 
     return payment
+  }
+
+  // Метод на обновление статуса заказа, для этого нужен ngrok
+  async updateStatus(dto: PaymentStatusDto) {
+    // делаем проверку на статус, если payment.waiting_for_capture т.е ожидает подверждения
+    // все эти ивенты можно посмотреть в юкассе в админке
+    if (dto.event === 'payment.waiting_for_capture') {
+      // типизируем из библиотеки юкассы
+      const capturePayment: ICapturePayment = {
+        // общая сумма - amount
+        amount: {
+          value: dto.object.amount.value,
+          currency: dto.object.amount.currency
+        }
+      }
+
+      // вызываем метод из конфига юкассы и принимает в себя id платежа и оплату с суммой и валютой
+      return checkout.capturePayment(dto.object.id, capturePayment)
+    }
+
+    // если оплата успешно прошла
+    if (dto.event === 'payment.succeeded') {
+      // получаем id Заказа
+      // через split мы режим строчку на под массив строчек
+      // получается примерно так ["Оплата заказа в магазине TeaShop. ID платежа: ", "15"]
+      // где потом получаем 1 элемент из этого массива т.е наше число и записываем его в orderId
+      const orderId = dto.object.description.split('#')[1]
+
+      // дальше делаем обновление в бд статуса
+      await this.prisma.order.update({
+        // ищем по обрезанному ранее id заказа
+        where: {
+          id: orderId
+        },
+        // и в качесве статуста указываем через Enum PAYED т.е оплачен
+        data: {
+          status: EnumOrderStatus.PAYED
+        }
+      })
+
+      // обязательно возвращаем true
+      return true
+    }
+
+    // обязательно возвращаем true
+    return true
   }
 }

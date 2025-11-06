@@ -27,6 +27,7 @@ class ObjectPayment {
 
 // Статус оплаты
 export class PaymentStatusDto {
+  // все эти ивенты указаны в юкассе в админке
   event:
     | 'payment.succeeded'
     | 'payment.waiting_for_capture'
