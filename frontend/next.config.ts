@@ -2,7 +2,8 @@ import type { NextConfig } from 'next'
 
 // Включаем все в nextConfig чтобы env норм работало
 const nextConfig: NextConfig = {
-  /* config options here */
+  // подключение шрифта из библиотеки
+  transpilePackages: ['geist'],
   // настройка env файла
   env: {
     // указываем все наши env переменные из файла .env
