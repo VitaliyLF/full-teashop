@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import Home from './Home'
 
 export const metadata: Metadata = {
-  title: 'Ваш шопинг,ваше удовоствие - все в однмо месте',
+  title: 'Все в одном месте',
 }
 
 const HomePage = () => {
