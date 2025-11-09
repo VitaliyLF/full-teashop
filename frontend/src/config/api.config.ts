@@ -1,4 +1,4 @@
-// Серверный конфиг url
+// Серверный конфиг api
 
 // это url нашего сервера
 export const SERVER_URL = process.env.SERVER_URL as string
