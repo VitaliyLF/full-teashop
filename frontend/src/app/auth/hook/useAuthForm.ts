@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { PUBLIC_URL } from '@/config/url.config'
+import { DASHBOARD_URL } from '@/config/url.config'
 
 import { authService } from '@/services/auth/auth.services'
 
@@ -39,9 +39,9 @@ export const useAuthForm = (isReg: boolean) => {
       form.reset()
       // выводим тост уведомление
       toast.success('Успешная авторизация')
-      // в самом конце обращаемся к роутеру и переадресовываем пользователя на главную страницу
-      // можно переводить на страницу дашборда
-      router.replace(PUBLIC_URL.home())
+      // в самом конце обращаемся к роутеру и переадресовываем пользователя на страницу дашборда
+      // можно переводить на главную
+      router.replace(DASHBOARD_URL.home())
     },
     // При ошибке запроса при вводе в форму
     onError(error) {
