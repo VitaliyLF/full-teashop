@@ -54,7 +54,7 @@ const Auth = () => {
                 <AuthFields form={form} isPending={isPending} isReg={isReg} />
 
                 <Button className="w-full mb-6" disabled={isPending}>
-                  {isReg ? 'Создать' : 'Авторизоваться'}
+                  {isReg ? 'Регистрация' : 'Авторизоваться'}
                 </Button>
               </form>
             </Form>

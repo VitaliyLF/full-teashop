@@ -34,7 +34,14 @@ const AuthFields = ({ form, isPending, isReg = false }: AuthFieldsProps) => {
             <FormItem>
               <FormControl>
                 {/* выше это все библиотеки и разворациваем field на инпут */}
-                <Input placeholder="Иван" disabled={isPending} {...field} />
+                <Input
+                  placeholder="Иван"
+                  disabled={isPending}
+                  {...field}
+                  // всегда нужно либо в форме указывать defaultValues для полей или так
+                  // потому что так мы их делаем контролируемыми при первом рендере
+                  value={field.value ?? ''}
+                />
               </FormControl>
               {/* для вывода ошибки */}
               <FormMessage />
