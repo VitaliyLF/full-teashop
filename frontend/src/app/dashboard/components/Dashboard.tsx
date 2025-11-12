@@ -5,8 +5,6 @@ import { useEffect } from 'react'
 
 import { saveTokensStorage } from '@/services/auth/auth-token.services'
 
-export const dynamic = 'force-dynamic'
-
 const Dashboard = () => {
   // обявляем хук useSearchParams
   const searchParams = useSearchParams()

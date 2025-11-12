@@ -1,10 +1,9 @@
 import { UseFormReturn } from 'react-hook-form'
 
-import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form-elements/Form'
-import { Input } from '@/components/ui/form-elements/Input'
-
 import { validEmail } from '@/shared/regex'
 import { IAuthForm } from '@/shared/types/auth.interface'
+import { FormControl, FormField, FormItem, FormMessage } from '@/shared/ui/form-elements/Form'
+import { Input } from '@/shared/ui/form-elements/Input'
 
 interface AuthFieldsProps {
   // то что пишеться в <> называется джинерики
