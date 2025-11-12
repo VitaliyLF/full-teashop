@@ -1,6 +1,7 @@
 //Типы для авторизации
 import { IUser } from './user.interface'
 
+// это типизация полей формы
 export interface IAuthForm {
   name: string
   email: string

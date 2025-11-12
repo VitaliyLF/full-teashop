@@ -1,51 +1,3 @@
-// import { axiosClassic } from '@/api/api.interceptors'
-// import { API_URL } from '@/config/api.config'
-// import { IAuthForm, IAuthResponse } from '@/shared/types/auth.interface'
-// import { removeFromStorage, saveTokensStorage } from './auth-token.services'
-// // здесь делаем класс
-// class AuthService {
-//   // описываем методы
-//   // метод на логин или регистрацию
-//   async main(type: 'login' | 'register', data: IAuthForm) {
-//     // вызываем интерсептор классик
-//     const response = await axiosClassic<IAuthResponse>({
-//       // в качестве url вызываем API_URL это роутинг серверный
-//       url: API_URL.auth(`/${type}`),
-//       // указываем метод
-//       method: 'POST',
-//       // и прокидываем наши данные
-//       data,
-//     })
-//     // если все корректно и нам пришел токен то сохраняем токен в storage и в него прокидываем токен
-//     if (response.data.accessToken) saveTokensStorage(response.data.accessToken)
-//     return response
-//   }
-//   // метод на получение новых токенов
-//   async getNewTokens() {
-//     const response = await axiosClassic<IAuthResponse>({
-//       // по этому url auth/login/access-token идет запрос на получения новых токенов
-//       url: API_URL.auth('/login/access-token'),
-//       method: 'POST',
-//     })
-//     if (response.data.accessToken) saveTokensStorage(response.data.accessToken)
-//     return response
-//   }
-//   // метод на логаут из системы
-//   async logout() {
-//     // будет возвращаться boolean Значение
-//     const response = await axiosClassic<boolean>({
-//       // по этому url auth/logout возвращает булевое значение
-//       url: API_URL.auth('/logout'),
-//       method: 'POST',
-//     })
-//     // если все нормально если мы вышли вызываем функцию на удаление accessToken
-//     if (response.data) removeFromStorage()
-//     return response
-//   }
-// }
-// // экспортирую наш экземпляр класса
-// export const authService = new AuthService()
-// через функции
 import { axiosClassic } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
@@ -55,7 +7,7 @@ import { IAuthForm, IAuthResponse } from '@/shared/types/auth.interface'
 import { removeFromStorage, saveTokensStorage } from './auth-token.services'
 
 // Функция на логин или регистрацию
-export const main = async (type: 'login' | 'register', data: IAuthForm) => {
+const main = async (type: 'login' | 'register', data: IAuthForm) => {
   // вызываем интерсептор классик
   const response = await axiosClassic<IAuthResponse>({
     // в качестве url вызываем API_URL это роутинг серверный
@@ -73,7 +25,7 @@ export const main = async (type: 'login' | 'register', data: IAuthForm) => {
 }
 
 // Функция на получение новых токенов
-export const getNewTokens = async () => {
+const getNewTokens = async () => {
   const response = await axiosClassic<IAuthResponse>({
     // по этому url auth/login/access-token идет запрос на получения новых токенов
     url: API_URL.auth('/login/access-token'),
@@ -86,7 +38,7 @@ export const getNewTokens = async () => {
 }
 
 // Функция на логаут из системы
-export const logout = async () => {
+const logout = async () => {
   // будет возвращаться boolean Значение
   const response = await axiosClassic<boolean>({
     // по этому url auth/logout возвращает булевое значение
