@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
 }
 
+// только корневой лояут имеет теги Html и body остальные просто принимают children
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={`${GeistSans.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   )
