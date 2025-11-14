@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 // дальше рендерим как компонент
 const MenuItem = ({ href, icon: Icon, value }: IMenuItem) => {
   // чтобы проверять на активный элемент
-  // тут будет /store/:id или /store/:id/product и тд
+  // тут будет /store/:id
   // Возвращает текущий полный путь (URL path) в виде строки без query-параметров
   const pathname = usePathname()
 

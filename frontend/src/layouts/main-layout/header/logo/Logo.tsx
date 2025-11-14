@@ -17,7 +17,7 @@ const Logo = ({ className }: LogoProps) => {
       className={cn('logo flex items-center gap-3 hover:opacity-75 transition-opacity', className)}
       href={PUBLIC_URL.home()}>
       <Image src="/images/logo.svg" alt={`${SITE_NAME} лого`} width={35} height={35} />
-      <div className="text-2xl font-bold text-blue-600">{SITE_NAME}</div>
+      <div className="text-2xl font-bold text-blue-600">Shop</div>
     </Link>
   )
 }

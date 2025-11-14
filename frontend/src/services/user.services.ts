@@ -6,13 +6,14 @@ import { IUser } from '@/shared/types/user.interface'
 
 // метод на получение профиля юзера только для авторизированных пользователей
 const getProfile = async () => {
-  const response = await axiosWithAuth<IUser>({
+  // делаем деструктуризацию response чтобы обращаться к объекту по цепочке
+  const { data } = await axiosWithAuth<IUser>({
     // серверный роутинг для юзера /users/profile
     url: API_URL.users('/profile'),
     method: 'GET',
   })
 
-  return response
+  return data
 }
 
 // метод на добавление заказа в избранное
