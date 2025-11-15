@@ -30,7 +30,7 @@ const Header = () => {
             // в StoreSwitcher прокидываем созданные юзером массив магазинов
             // каждый юзер по задумке сайта может создавать в админке множество своих магазинов
             <>
-              <StoreSwitcher items={user.stores} />
+              <StoreSwitcher stores={user.stores} />
               <Link href={DASHBOARD_URL.home()}>
                 <Image
                   className="rounded-full"

@@ -1,6 +1,6 @@
 import { Menu } from 'lucide-react'
 
-import { Sheet, SheetContent, SheetTrigger } from '@/shared/ui/Sheet'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/Sheet'
 
 import Sidebar from './Sidebar'
 
@@ -11,9 +11,13 @@ const MobileSidebar = () => {
       <SheetTrigger className="lg:hidden pr-4 hover:opacity-75 transition">
         <Menu />
       </SheetTrigger>
-      {/* сам sidebar */}
+      {/* сам sidebar нужно указывать header-title иначе ругается на доступность */}
       <SheetContent className="p-0 bg-white" side="left">
-        <Sidebar />
+        <SheetHeader>
+          <SheetTitle>
+            <Sidebar />
+          </SheetTitle>
+        </SheetHeader>
       </SheetContent>
     </Sheet>
   )
