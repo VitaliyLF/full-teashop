@@ -1,4 +1,4 @@
-import { axiosClassic } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
@@ -6,7 +6,7 @@ import { IStore, IStoreCreate, IStoreEdit } from '@/shared/types/store.interface
 
 // метод на получение магазина по id
 const getById = async (id: string) => {
-  const { data } = await axiosClassic<IStore>({
+  const { data } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/by-id/id
     url: API_URL.stores(`/by-id/${id}`),
     method: 'GET',
@@ -17,7 +17,7 @@ const getById = async (id: string) => {
 
 // метод на создание магазина
 const create = async (data: IStoreCreate) => {
-  const { data: createdStore } = await axiosClassic<IStore>({
+  const { data: createdStore } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores
     url: API_URL.stores(''),
     method: 'POST',
@@ -29,7 +29,7 @@ const create = async (data: IStoreCreate) => {
 
 // метод на обновление магазина по его id
 const update = async (id: string, data: IStoreEdit) => {
-  const { data: updatedStore } = await axiosClassic<IStore>({
+  const { data: updatedStore } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/id
     url: API_URL.stores(`/${id}`),
     method: 'PUT',
@@ -41,7 +41,7 @@ const update = async (id: string, data: IStoreEdit) => {
 
 // метод на удаление магазина по id
 const deleteStore = async (id: string) => {
-  const { data: deleteStore } = await axiosClassic<IStore>({
+  const { data: deleteStore } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/id
     url: API_URL.stores(`/${id}`),
     method: 'DELETE',
