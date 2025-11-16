@@ -1,6 +1,6 @@
 // хуки для запросов и работы с store
 // через tanstack query
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import toast from 'react-hot-toast'
@@ -19,12 +19,28 @@ export const useCreateStore = () => {
   // Вы можете отключить это поведение, передав Scroll: false в router.push() или router.replace().
   const router = useRouter()
 
+  // логика чтобы когда магазин создан не нужно было обновлять страницу чтобы это увидеть в выпадающем списке
+  // это называется ревалидация данных
+  // подключаем клиента
+  const queryClient = useQueryClient()
+
   // производим мутацию
   // data прокидывается через mutate(data) и попадает в функцию mutationFn
   const { mutate: createStore, isPending: isLoadingCreateStore } = useMutation({
     mutationKey: ['create store'],
     mutationFn: (data: IStoreCreate) => storeService.create(data),
+    // onSuccess это response ответ данные с сервера при ответе
     onSuccess(store) {
+      // перед тем как выводим toast будет переотравлять запрос на обновления профиля
+      // т.е в onSuccess нам приходит ответ и мы отправляем запрос и смотри что за данные у юзера
+      // чтобы сразу получать обновленые данные и сразу их отображать на ui
+      // Ревалидация будет срабатывает при успешном запросе и мы будет обновлять данные без обновления страницы
+      queryClient.invalidateQueries({
+        // этот ключ уже есть и логика на нем это получения profile юзера
+        // и получается тут мы отправляем запрос на обновления юзера
+        queryKey: ['profile'],
+      })
+
       // store это то что пришло в ответе при создании
       toast.success('Магазин создан')
       // переадресовываем его на главную страницу store после создания его

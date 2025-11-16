@@ -45,6 +45,7 @@ export const useAuthForm = (isReg: boolean) => {
     // принимает данные из формы и вызываем нашу функцию main в нее прокидываем первым параметром query и сами данные
     mutationFn: (data: IAuthForm) => authService.main(isReg ? 'register' : 'login', data),
     // обработка что будет происходит при успешном запросе
+    // onSuccess это response ответ данные с сервера при ответе мы можем в параметре взять его и как то работать с этим
     onSuccess() {
       // обновляем поля у формы
       form.reset()

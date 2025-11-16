@@ -4,6 +4,8 @@ import { API_URL } from '@/config/api.config'
 
 import { IStore, IStoreCreate, IStoreEdit } from '@/shared/types/store.interface'
 
+// Все взаимодействия с store могут выполнять только авторизованные пользователи
+
 // метод на получение магазина по id
 const getById = async (id: string) => {
   const { data } = await axiosWithAuth<IStore>({

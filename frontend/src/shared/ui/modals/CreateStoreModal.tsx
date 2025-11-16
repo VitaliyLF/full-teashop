@@ -36,6 +36,10 @@ const CreateStoreModal = ({ children }: PropsWithChildren<unknown>) => {
   // инициализируем форму
   const form = useForm<IStoreCreate>({
     mode: 'onChange',
+    defaultValues: {
+      // так как у нас есть инпут с именем  name="title" по дефолту нужно указать пустую строку
+      title: '',
+    },
   })
 
   // обработчик для формы сабмит
