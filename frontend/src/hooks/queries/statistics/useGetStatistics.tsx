@@ -8,13 +8,13 @@ export const useGetStatistics = () => {
   const params = useParams<{ storeId: string }>()
 
   // получаем данные по /main/${storeId}
-  const { data: main } = useQuery({
+  const { data: main, isLoading: isMainStatisticsLoading } = useQuery({
     queryKey: ['get main statistics'],
     queryFn: () => statisticsService.getMain(params.storeId),
   })
 
   // получаем данные по /middle/${storeId}
-  const { data: middle } = useQuery({
+  const { data: middle, isLoading: isMiddleStatisticsLoading } = useQuery({
     queryKey: ['get middle statistics'],
     queryFn: () => statisticsService.getMiddle(params.storeId),
   })
@@ -25,5 +25,8 @@ export const useGetStatistics = () => {
 
   // В стрелочной функции фигурные скобки — это тело функции, а не объект.
   // если мы запишем как { main, middle } JavaScript думает, что ты написал тело функции без return.
-  return useMemo(() => ({ main, middle }), [main, middle])
+  return useMemo(
+    () => ({ main, isMainStatisticsLoading, middle, isMiddleStatisticsLoading }),
+    [main, isMainStatisticsLoading, middle, isMiddleStatisticsLoading],
+  )
 }

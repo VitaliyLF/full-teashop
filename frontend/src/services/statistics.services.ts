@@ -2,7 +2,7 @@ import { axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
-import { IMainStatistics } from '@/shared/types/statistics.interface'
+import { IMainStatistics, IMiddleStatistics } from '@/shared/types/statistics.interface'
 
 // метод на получение главной статистики
 const getMain = async (storeId: string) => {
@@ -16,7 +16,7 @@ const getMain = async (storeId: string) => {
 
 // метод на получение средней статистики
 const getMiddle = async (storeId: string) => {
-  const { data } = await axiosWithAuth<IMainStatistics>({
+  const { data } = await axiosWithAuth<IMiddleStatistics>({
     url: API_URL.statistics(`/middle/${storeId}`),
     method: 'GET',
   })

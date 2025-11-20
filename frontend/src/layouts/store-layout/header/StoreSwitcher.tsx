@@ -1,10 +1,12 @@
 'use client'
 
-import { ChevronsUpDown, Plus, StoreIcon } from 'lucide-react'
+import { ChevronsUpDown, DeleteIcon, Plus, StoreIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { STORE_URL } from '@/config/url.config'
+
+import { useDeleteStore } from '@/hooks/queries/store/useDeleteStore'
 
 import { IStore } from '@/shared/types/store.interface'
 import { Button } from '@/shared/ui/Button'
@@ -28,6 +30,8 @@ interface StoreSwitcherProps {
 const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+
+  const { deleteStore } = useDeleteStore()
 
   // то что будет происходить при выборе магазина
   const onStoreSelect = (storeId: string) => {
@@ -58,9 +62,18 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
             <CommandEmpty>Ничего не найдено.</CommandEmpty>
             <CommandGroup heading="Магазины">
               {stores.map(({ id, title }) => (
-                <CommandItem className="text-sm" key={id} onSelect={() => onStoreSelect(id)}>
-                  <StoreIcon className="mr-2 size-4" />
-                  <h2 className="line-clamp-1">{title}</h2>
+                <CommandItem
+                  className="text-sm flex items-center justify-between"
+                  key={id}
+                  onSelect={() => onStoreSelect(id)}>
+                  <div className="flex items-center gap-2">
+                    <StoreIcon className="size-4" />
+                    <h2 className="line-clamp-1">{title}</h2>
+                  </div>
+
+                  <button className="cursor-pointer" onClick={() => deleteStore(id)}>
+                    <DeleteIcon />
+                  </button>
                 </CommandItem>
               ))}
             </CommandGroup>
