@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/components/ui/Button'
 import {
   Card,
   CardContent,
@@ -11,8 +11,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/shared/ui/Card'
-import { Form } from '@/shared/ui/form-elements/Form'
+} from '@/components/ui/Card'
+import { Form } from '@/components/ui/form-elements/Form'
 
 import { useAuthForm } from '../hook/useAuthForm'
 

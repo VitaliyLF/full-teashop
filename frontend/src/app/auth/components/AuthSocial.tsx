@@ -5,9 +5,9 @@ import { MouseEventHandler } from 'react'
 import { FaYandex } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 
-import { SERVER_URL } from '@/config/api.config'
+import { Button } from '@/components/ui/Button'
 
-import { Button } from '@/shared/ui/Button'
+import { SERVER_URL } from '@/config/api.config'
 
 const AuthSocial = () => {
   // это нужно для переадрессации после авторизации через яндекс гугл

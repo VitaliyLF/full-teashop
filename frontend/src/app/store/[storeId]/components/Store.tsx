@@ -1,6 +1,6 @@
 'use client'
 
-import Heading from '@/shared/ui/Heading'
+import Heading from '@/components/ui/Heading'
 
 import MainStatistics from './main-statistics/MainStatistics'
 import MiddleStatistics from './middle-statistics/MiddleStatistics'

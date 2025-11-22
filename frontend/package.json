@@ -24,7 +24,7 @@
     "cmdk": "^1.1.1",
     "geist": "^1.5.1",
     "js-cookie": "^3.0.5",
-    "lucide-react": "^0.553.0",
+    "lucide-react": "^0.554.0",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-countup": "^6.5.3",
@@ -33,6 +33,7 @@
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
+    "recharts": "2.15.4",
     "redux-persist": "^6.0.0",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.1.12"

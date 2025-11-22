@@ -1,8 +1,8 @@
+import { Skeleton } from '@/components/ui/Skeleton'
+
 import { SKELETON_COUNT_MAIN_STATISTICS } from '@/constants/skeleton.constants'
 
 import { useGetStatistics } from '@/hooks/queries/statistics/useGetStatistics'
-
-import { Skeleton } from '@/shared/ui/Skeleton'
 
 import MainStatisticsItem from './MainStatisticsItem'
 
@@ -25,7 +25,7 @@ const MainStatistics = () => {
   return (
     <div className="main mt-8 grid grid-cols-1 gap-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
       {main?.length ? (
-        main.map((item) => <MainStatisticsItem key={item.id} item={item} />)
+        main.map((item) => <MainStatisticsItem key={item.id} {...item} />)
       ) : (
         <p className="text-2xl text-red-500">Нет данных для статистики</p>
       )}

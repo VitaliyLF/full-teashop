@@ -1,15 +1,17 @@
-import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
+import { defineConfig, globalIgnores } from 'eslint/config'
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
     rules: {
+      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'error',
+      // запрещает расширяться интерфейсам в ts с пустым значением
+      // '@typescript-eslint/no-empty-object-type': 'error',
       'no-console': 'warn',
       eqeqeq: 'warn',
       'no-else-return': 'warn',

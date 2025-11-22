@@ -3,11 +3,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import Loader from '@/components/ui/Loader'
+
 import { DASHBOARD_URL } from '@/config/url.config'
 
 import { useProfile } from '@/hooks/userProfile'
-
-import Loader from '@/shared/ui/Loader'
 
 import MobileSidebar from '../sidebar/MobileSidebar'
 

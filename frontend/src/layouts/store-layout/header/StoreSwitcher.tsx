@@ -4,12 +4,7 @@ import { ChevronsUpDown, DeleteIcon, Plus, StoreIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { STORE_URL } from '@/config/url.config'
-
-import { useDeleteStore } from '@/hooks/queries/store/useDeleteStore'
-
-import { IStore } from '@/shared/types/store.interface'
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/components/ui/Button'
 import {
   Command,
   CommandEmpty,
@@ -18,9 +13,15 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/shared/ui/Command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/Popover'
-import CreateStoreModal from '@/shared/ui/modals/CreateStoreModal'
+} from '@/components/ui/Command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/Popover'
+import CreateStoreModal from '@/components/ui/modals/CreateStoreModal'
+
+import { STORE_URL } from '@/config/url.config'
+
+import { useDeleteStore } from '@/hooks/queries/store/useDeleteStore'
+
+import { IStore } from '@/shared/types/store.interface'
 
 // будет принимать items это массив наших магазинов
 interface StoreSwitcherProps {
