@@ -13,4 +13,4 @@ export type IStoreCreate = Pick<IStore, 'title'>
 
 // Тип на изменение магазина
 // тут делаем Omit поскольку нам нужно все кроме id т.е брать все и исключать только id
-export type IStoreEdit = Omit<IStore, 'id'>
+export type IStoreUpdate = Omit<IStore, 'id'>

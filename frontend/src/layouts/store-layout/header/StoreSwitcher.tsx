@@ -31,11 +31,21 @@ interface StoreSwitcherProps {
 const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+  // состояние для выбранного магазина чтобы он менялся на ui
+  const [selectedStore, setSelectedStore] = useState<IStore | null>(null)
 
-  const { deleteStore } = useDeleteStore()
+  // ставим false чтобы не было редеректа на главную страницу
+  const { deleteStore } = useDeleteStore({ redirectToHome: false })
 
   // то что будет происходить при выборе магазина
   const onStoreSelect = (storeId: string) => {
+    // при выборе находит нужный магазин по id find может вернуть undefined потому делаем проверку еще на null
+    const store = stores.find((store) => store.id === storeId) ?? null
+
+    if (!store) return
+
+    setSelectedStore(store)
+
     setIsOpen(false)
     // в списке всех магазинов у пользователя при клике на нужный магазин меняеться url и мы переходим на нужный магазин
     router.push(STORE_URL.home(storeId), { scroll: false })
@@ -52,7 +62,7 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
           aria-expanded={isOpen}
           aria-label="Выберете магазин">
           <StoreIcon className="mr-2 size-4" />
-          Текущий магазин
+          {selectedStore ? selectedStore.title : 'Текущий магазин'}
           <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -72,7 +82,7 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
                     <h2 className="line-clamp-1">{title}</h2>
                   </div>
 
-                  <button className="cursor-pointer" onClick={() => deleteStore(id)}>
+                  <button className="cursor-pointer" onClick={() => deleteStore()}>
                     <DeleteIcon />
                   </button>
                 </CommandItem>

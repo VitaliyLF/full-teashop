@@ -2,14 +2,14 @@ import { axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
-import { IStore, IStoreCreate, IStoreEdit } from '@/shared/types/store.interface'
+import { IStore, IStoreCreate, IStoreUpdate } from '@/shared/types/store.interface'
 
 // Все взаимодействия с store могут выполнять только авторизованные пользователи
 
 // метод на получение магазина по id
 const getById = async (id: string) => {
   const { data } = await axiosWithAuth<IStore>({
-    // серверный роутинг для магазина /stores/by-id/id
+    // серверный роутинг для магазина /stores/by-id/:id
     url: API_URL.stores(`/by-id/${id}`),
     method: 'GET',
   })
@@ -30,9 +30,9 @@ const create = async (data: IStoreCreate) => {
 }
 
 // метод на обновление магазина по его id
-const update = async (id: string, data: IStoreEdit) => {
+const update = async (id: string, data: IStoreUpdate) => {
   const { data: updatedStore } = await axiosWithAuth<IStore>({
-    // серверный роутинг для магазина /stores/id
+    // серверный роутинг для магазина /stores/:id
     url: API_URL.stores(`/${id}`),
     method: 'PUT',
     data,

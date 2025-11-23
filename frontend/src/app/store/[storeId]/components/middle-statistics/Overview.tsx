@@ -32,7 +32,7 @@ interface OverviewProps {
 
 const Overview = ({ data }: OverviewProps) => {
   return (
-    <Card className="">
+    <Card>
       <CardHeader className="header flex flex-col items-stretch space-y-0 p-4 border-b">
         <CardTitle className="title text-xl font-medium tracking-[0.1px] line-clamp-1">
           Прибыль
@@ -57,10 +57,11 @@ const Overview = ({ data }: OverviewProps) => {
             <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
             {/* Тултип при наведении */}
             <ChartTooltip
-              content={<ChartTooltipContent labelFormatter={formatPrice} indicator="line" />}
+              content={<ChartTooltipContent labelFormatter={formatPrice} indicator="dot" />}
             />
             {/* это то что с бекенда получаем именно в объекте data которая приходит в компонент пропом */}
             {/* указываем ключ строку в поле потом fill с переменной и названием ключа */}
+            {/* здесь из конфига указываем в dataKey поле и цвета для этого поля */}
             <Area
               dataKey="value"
               type="natural"

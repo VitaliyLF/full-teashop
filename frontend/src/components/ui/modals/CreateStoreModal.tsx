@@ -45,7 +45,13 @@ const CreateStoreModal = ({ children }: PropsWithChildren<unknown>) => {
   // обработчик для формы сабмит
   const onSubmit: SubmitHandler<IStoreCreate> = (data) => {
     // это mutate который принимает data данные из формы
-    createStore(data)
+    // вот тут после успешного создания формы обнонуляем инпут
+    createStore(data, {
+      onSuccess: () => {
+        // Очищаем все но можно конкретно указать какое поле
+        form.reset()
+      },
+    })
     // закрываем модалку
     setIsOpen(false)
   }
