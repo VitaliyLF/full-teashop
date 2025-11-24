@@ -15,6 +15,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/Command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/Popover'
+import ConfirmModal from '@/components/ui/modals/ConfirmModal'
 import CreateStoreModal from '@/components/ui/modals/CreateStoreModal'
 
 import { STORE_URL } from '@/config/url.config'
@@ -82,9 +83,14 @@ const StoreSwitcher = ({ stores }: StoreSwitcherProps) => {
                     <h2 className="line-clamp-1">{title}</h2>
                   </div>
 
-                  <button className="cursor-pointer" onClick={() => deleteStore()}>
-                    <DeleteIcon />
-                  </button>
+                  <ConfirmModal handleClick={() => deleteStore()}>
+                    <button
+                      className="cursor-pointer"
+                      onClick={(event) => event.stopPropagation()}
+                      type="button">
+                      <DeleteIcon />
+                    </button>
+                  </ConfirmModal>
                 </CommandItem>
               ))}
             </CommandGroup>
