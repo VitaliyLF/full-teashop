@@ -1,3 +1,4 @@
+'use client'
 import { useParams } from 'next/navigation'
 
 import { useGetProducts } from '@/hooks/queries/products/useGetProducts'
