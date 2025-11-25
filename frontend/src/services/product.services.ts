@@ -65,7 +65,7 @@ const getMostPopular = async () => {
 // метод на получение похожих продуктов
 const getSimilar = async (id: string) => {
   const { data } = await axiosClassic<IProduct[]>({
-    // серверный роутинг для продукта /products/similar/id
+    // серверный роутинг для продукта /products/similar/:id
     url: API_URL.products(`/similar/${id}`),
     method: 'GET',
   })
@@ -76,7 +76,7 @@ const getSimilar = async (id: string) => {
 // метод на создание продукта для магазина
 const create = async (data: IProductInput, storeId: string) => {
   const { data: createdProduct } = await axiosWithAuth<IProduct[]>({
-    // серверный роутинг для магазина /products/storeId
+    // серверный роутинг для магазина /products/:storeId
     url: API_URL.products(`/${storeId}`),
     method: 'POST',
     data,
