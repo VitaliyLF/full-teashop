@@ -12,12 +12,13 @@ export interface IProduct {
   category: ICategory
   reviews: IReview[]
   color: IColor
-  store: IStore
+  // можно еще так брать значения чисто его из другого интерфейса, можно просто string указать
+  storeId: IStore['id']
 }
 
 // Omit удаляет указанные типы и мы расширяемся от IProduct с нужными полями
 export interface IProductInput
-  extends Omit<IProduct, 'id' | 'reviews' | 'store' | 'category' | 'color'> {
+  extends Omit<IProduct, 'id' | 'reviews' | 'storeId' | 'category' | 'color'> {
   categoryId: string
   colorId: string
 }

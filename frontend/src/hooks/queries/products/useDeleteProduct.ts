@@ -13,7 +13,7 @@ export const useDeleteProduct = () => {
 
   const queryClient = useQueryClient()
 
-  const { mutate: deleteStore, isPending: isLoadingDelete } = useMutation({
+  const { mutate: deleteProduct, isPending: isLoadingDelete } = useMutation({
     mutationKey: ['delete product'],
     mutationFn: () => productService.deleteProduct(productId),
     onSuccess() {
@@ -29,5 +29,5 @@ export const useDeleteProduct = () => {
     },
   })
 
-  return useMemo(() => ({ deleteStore, isLoadingDelete }), [deleteStore, isLoadingDelete])
+  return useMemo(() => ({ deleteProduct, isLoadingDelete }), [deleteProduct, isLoadingDelete])
 }

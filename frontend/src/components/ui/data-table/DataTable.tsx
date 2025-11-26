@@ -40,6 +40,8 @@ export function DataTable<TData, TValue>({
   data,
   filterKey,
 }: DataTableProps<TData, TValue>) {
+  'use no memo'
+
   // копируем и заводим состояние для сортировки
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -70,16 +72,17 @@ export function DataTable<TData, TValue>({
         <div className="search flex items-center py-4">
           {/* у нас будет поиск в цветах поиск по name а в store table поиск по title, т.е он может отличаться и делаем универсально и через
         пропсы прокидываем через что будет у нас поиск */}
+          {/* В качестве ключа записываем не строчку по чем фильтровать getColumn('price') а filterKey т.е по опеределенном ключу который сверху приходит в компонент */}
           <Input
             placeholder="Поиск"
-            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+            value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn(filterKey)?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
         </div>
       )}
 
-      <div className="table overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

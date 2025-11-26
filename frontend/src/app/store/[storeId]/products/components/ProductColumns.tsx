@@ -25,7 +25,7 @@ export interface IProductColumn {
 // создаем колонки для нашей таблици
 // типизируем ее из библиотки
 // лучше посмотреть как работает библиотека
-export const columns: ColumnDef<IProductColumn>[] = [
+export const productColumns: ColumnDef<IProductColumn>[] = [
   {
     accessorKey: 'title',
     header: ({ column }) => {

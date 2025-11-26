@@ -20,7 +20,7 @@ export const useCreateProduct = () => {
   // PUT
   // DELETE
   // useMutation — для изменения данных, то есть POST / PUT / PATCH / DELETE.
-  const { mutate: createStore, isPending: isLoadingCreate } = useMutation({
+  const { mutate: createProduct, isPending: isLoadingCreate } = useMutation({
     mutationKey: ['create product', storeId],
     mutationFn: (data: IProductInput) => productService.create(data, storeId),
     onSuccess() {
@@ -38,5 +38,5 @@ export const useCreateProduct = () => {
     },
   })
 
-  return useMemo(() => ({ createStore, isLoadingCreate }), [createStore, isLoadingCreate])
+  return useMemo(() => ({ createProduct, isLoadingCreate }), [createProduct, isLoadingCreate])
 }
