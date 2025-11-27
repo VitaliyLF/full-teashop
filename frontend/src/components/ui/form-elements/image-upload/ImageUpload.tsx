@@ -30,7 +30,7 @@ const ImageUpload = ({ isDisabled, onChange, value }: IImageUploadProps) => {
         ))}
       </div>
       <Button
-        className={cn('upload cursor-pointer', {
+        className={cn('upload cursor-pointer w-fit', {
           'mt-4': value.length,
         })}
         type="button"

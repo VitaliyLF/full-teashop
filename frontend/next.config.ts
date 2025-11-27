@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // включаем глобальную страницу не найдено
+  experimental: {
+    globalNotFound: true,
+  },
 
   // функция rewrites она нужно чтобы подключать файлы с сервера
   // uploads/products/... вот эти картинки

@@ -31,6 +31,7 @@ export const useCreateProduct = () => {
         queryKey: ['get products for store dashboard'],
       })
       toast.success('Товар создан')
+      // после успешного создания продукта редеректить на /store/:storeId/products
       push(STORE_URL.products(storeId))
     },
     onError() {

@@ -121,6 +121,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
                 <FormLabel>Название</FormLabel>
                 <FormControl>
                   <Input
+                    className="max-w-[300px]"
                     placeholder="Введите название товара"
                     disabled={disabled}
                     {...field}
@@ -142,6 +143,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
                 <FormLabel>Цена</FormLabel>
                 <FormControl>
                   <Input
+                    className="max-w-[300px]"
                     type="number"
                     inputMode="numeric"
                     placeholder="Цена товара"

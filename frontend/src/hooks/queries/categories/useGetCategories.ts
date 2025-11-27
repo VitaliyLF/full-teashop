@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 import { categoryService } from '@/services/category.services'
 
-export const useGetCategory = () => {
+export const useGetCategories = () => {
   const { storeId } = useParams<{ storeId: string }>()
 
   // используем useQuery для get запросов get запросы считают безопастными и не меняют состояние на сервре
