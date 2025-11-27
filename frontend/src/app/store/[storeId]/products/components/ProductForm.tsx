@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from '@/components/ui/form-elements/Form'
 import { Input } from '@/components/ui/form-elements/Input'
+import ImageUpload from '@/components/ui/form-elements/image-upload/ImageUpload'
 import ConfirmModal from '@/components/ui/modals/ConfirmModal'
 
 import { useCreateProduct } from '@/hooks/queries/products/useCreateProduct'
@@ -33,7 +34,7 @@ import { IColor } from '@/shared/types/color.interface'
 import { IProduct, IProductInput } from '@/shared/types/product.interface'
 
 interface IProductFormProps {
-  product: IProduct | null
+  product?: IProduct
   categories: ICategory[]
   colors: IColor[]
 }
@@ -63,13 +64,13 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
     },
   })
 
-  const onSubmit: SubmitHandler<IProductInput> = (data) => {
+  const onSubmit: SubmitHandler<IProductInput> = (formData) => {
     // переводим price строку в число
-    data.price = Number(data.price)
+    formData.price = Number(formData.price)
     // если у нас есть продукт тогда проводим мутацию на обновления данных
-    if (product) updateProduct(data)
+    if (product) updateProduct(formData)
     // иначе создаем мутацию на создания товара
-    else createProduct(data)
+    else createProduct(formData)
   }
 
   return (
@@ -86,8 +87,29 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
         )}
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-6" onSubmit={form.handleSubmit(onSubmit)}>
           {/* images upload */}
+          <FormField
+            control={form.control}
+            name="images"
+            rules={{
+              required: 'Загрузите хотя бы одну картинку',
+            }}
+            render={({ field }) => (
+              <FormItem className="mb-3">
+                <FormLabel>Картинки</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    isDisabled={disabled}
+                    onChange={field.onChange}
+                    value={field.value}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="title"
@@ -95,7 +117,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               required: 'Название товара',
             }}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>Название</FormLabel>
                 <FormControl>
                   <Input
@@ -116,10 +138,12 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               required: 'Цена обязательна',
             }}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>Цена</FormLabel>
                 <FormControl>
                   <Input
+                    type="number"
+                    inputMode="numeric"
                     placeholder="Цена товара"
                     disabled={disabled}
                     {...field}
@@ -137,7 +161,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               required: 'Категория обязательна',
             }}
             render={({ field: { onChange, value } }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>Категория</FormLabel>
                 <Select disabled={disabled} value={value} onValueChange={onChange}>
                   <FormControl>
@@ -166,7 +190,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               required: 'Цвет обязателен',
             }}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>Цвет</FormLabel>
                 <Select disabled={disabled} value={field.value} onValueChange={field.onChange}>
                   <FormControl>
@@ -195,7 +219,7 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               required: 'Описание обяательно',
             }}
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>Описание</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Описание товара" disabled={disabled} {...field} />
@@ -204,7 +228,6 @@ const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
               </FormItem>
             )}
           />
-
           <Button variant="primary" disabled={disabled}>
             {action}
           </Button>

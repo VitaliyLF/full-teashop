@@ -5,11 +5,11 @@ import toast from 'react-hot-toast'
 
 import { STORE_URL } from '@/config/url.config'
 
-import { productService } from '@/services/product.services'
+import { colorService } from '@/services/color.services'
 
-import { IProductInput } from '@/shared/types/product.interface'
+import { IColorInput } from '@/shared/types/color.interface'
 
-export const useCreateProduct = () => {
+export const useCreateColor = () => {
   const { storeId } = useParams<{ storeId: string }>()
   const { push } = useRouter()
 
@@ -20,23 +20,23 @@ export const useCreateProduct = () => {
   // PUT
   // DELETE
   // useMutation — для изменения данных, то есть POST / PUT / PATCH / DELETE.
-  const { mutate: createProduct, isPending: isLoadingCreate } = useMutation({
-    mutationKey: ['create product', storeId],
-    mutationFn: (data: IProductInput) => productService.create(storeId, data),
+  const { mutate: createColor, isPending: isLoadingCreate } = useMutation({
+    mutationKey: ['create color', storeId],
+    mutationFn: (data: IColorInput) => colorService.create(data, storeId),
     onSuccess() {
       // после успеха мы обновляет products
       // invalidateQueries чтобы делать инвалидацию - Перезапрос данных вручную с сервера
       // делаем один ключ для инвалидации
       queryClient.invalidateQueries({
-        queryKey: ['get products for store dashboard'],
+        queryKey: ['get colors for store dashboard'],
       })
-      toast.success('Товар создан')
-      push(STORE_URL.products(storeId))
+      toast.success('Цвет создан')
+      push(STORE_URL.colors(storeId))
     },
     onError() {
-      toast.error('Ошибка при создании продукта')
+      toast.error('Ошибка при создании цвета')
     },
   })
 
-  return useMemo(() => ({ createProduct, isLoadingCreate }), [createProduct, isLoadingCreate])
+  return useMemo(() => ({ createColor, isLoadingCreate }), [createColor, isLoadingCreate])
 }

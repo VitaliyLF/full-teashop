@@ -1,14 +1,14 @@
-import { axiosClassic } from '@/api/api.interceptors'
+import { axiosClassic, axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
 import { ICategory, ICategoryInput } from '@/shared/types/category.interface'
 
 // метод на получение категории по id магазину
-const getByStoreId = async (id: string) => {
-  const { data } = await axiosClassic<ICategory[]>({
-    // серверный роутинг для категорий /categories/by-storeId/:id
-    url: API_URL.categories(`/by-storeId/${id}`),
+const getByStoreId = async (storeId: string) => {
+  const { data } = await axiosWithAuth<ICategory[]>({
+    // серверный роутинг для категорий store/:storeId/categories/by-storeId/:id
+    url: API_URL.categories(`/by-storeId/${storeId}`),
     method: 'GET',
   })
 
@@ -18,7 +18,7 @@ const getByStoreId = async (id: string) => {
 // метод на получение категории по id
 const getById = async (id: string) => {
   const { data } = await axiosClassic<ICategory>({
-    // серверный роутинг для категорий /categories/by-id/:id
+    // серверный роутинг для категорий store/:storeId/categories/by-id/:id
     url: API_URL.categories(`/by-id/${id}`),
     method: 'GET',
   })
@@ -27,9 +27,9 @@ const getById = async (id: string) => {
 }
 
 // метод на создание категории для магазина по его id
-const create = async (data: ICategoryInput, storeId: string) => {
-  const { data: createdCategory } = await axiosClassic<ICategory>({
-    // серверный роутинг для категорий /categories/storeId
+const create = async (storeId: string, data: ICategoryInput) => {
+  const { data: createdCategory } = await axiosWithAuth<ICategory>({
+    // серверный роутинг для категорий store/:storeId/categories/storeId
     url: API_URL.categories(`/${storeId}`),
     method: 'POST',
     data,
@@ -39,10 +39,10 @@ const create = async (data: ICategoryInput, storeId: string) => {
 }
 
 // метод на обновление категории по его id
-const update = async (id: string, data: ICategoryInput) => {
-  const { data: updatedCategory } = await axiosClassic<ICategory>({
-    // серверный роутинг для категорий /categories/id
-    url: API_URL.categories(`/${id}`),
+const update = async (categoryId: string, data: ICategoryInput) => {
+  const { data: updatedCategory } = await axiosWithAuth<ICategory>({
+    // серверный роутинг для категорий store/:storeId/categories/id
+    url: API_URL.categories(`/${categoryId}`),
     method: 'PUT',
     data,
   })
@@ -51,10 +51,10 @@ const update = async (id: string, data: ICategoryInput) => {
 }
 
 // метод на удаление категории по его id
-const deleteCategory = async (id: string) => {
-  const { data: deleteCategory } = await axiosClassic<ICategory>({
-    // серверный роутинг для категорий /categories/id
-    url: API_URL.categories(`/${id}`),
+const deleteCategory = async (categoryId: string) => {
+  const { data: deleteCategory } = await axiosWithAuth<ICategory>({
+    // серверный роутинг для категорий store/:storeId/categories/id
+    url: API_URL.categories(`/${categoryId}`),
     method: 'DELETE',
   })
 

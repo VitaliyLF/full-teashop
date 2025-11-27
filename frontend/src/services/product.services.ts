@@ -19,10 +19,10 @@ const getAll = async (searchTerm?: string | null) => {
 }
 
 // метод на получение продуктов по id магазину
-const getByStoreId = async (id: string) => {
+const getByStoreId = async (storeId: string) => {
   const { data } = await axiosWithAuth<IProduct[]>({
     // серверный роутинг для прдуктов /products/by-storeId/:id
-    url: API_URL.products(`/by-storeId/${id}`),
+    url: API_URL.products(`/by-storeId/${storeId}`),
     method: 'GET',
   })
 
@@ -74,7 +74,7 @@ const getSimilar = async (id: string) => {
 }
 
 // метод на создание продукта для магазина
-const create = async (data: IProductInput, storeId: string) => {
+const create = async (storeId: string, data: IProductInput) => {
   const { data: createdProduct } = await axiosWithAuth<IProduct[]>({
     // серверный роутинг для магазина /products/:storeId
     url: API_URL.products(`/${storeId}`),
@@ -86,10 +86,10 @@ const create = async (data: IProductInput, storeId: string) => {
 }
 
 // метод на обновление продукта по его id
-const update = async (id: string, data: IProductInput) => {
+const update = async (storeId: string, data: IProductInput) => {
   const { data: updatedProduct } = await axiosWithAuth<IProduct[]>({
     // серверный роутинг для продукта /products/id
-    url: API_URL.products(`/${id}`),
+    url: API_URL.products(`/${storeId}`),
     method: 'PUT',
     data,
   })
@@ -98,10 +98,10 @@ const update = async (id: string, data: IProductInput) => {
 }
 
 // метод на удаление продукта по его id
-const deleteProduct = async (id: string) => {
+const deleteProduct = async (productId: string) => {
   const { data: deleteProduct } = await axiosWithAuth<IProduct>({
-    // серверный роутинг для продукта /products/id
-    url: API_URL.products(`/${id}`),
+    // серверный роутинг для продукта store/:storeId/products/:productId
+    url: API_URL.products(`/${productId}`),
     method: 'DELETE',
   })
 

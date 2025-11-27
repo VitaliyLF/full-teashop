@@ -42,8 +42,8 @@ const Settings = ({}: ISettingsProps) => {
   })
 
   // обработчик для формы
-  const onSubmit: SubmitHandler<IStoreUpdate> = (data) => {
-    updateStore(data)
+  const onSubmit: SubmitHandler<IStoreUpdate> = (formData) => {
+    updateStore(formData)
   }
 
   return (

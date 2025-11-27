@@ -15,6 +15,7 @@ export const useDeleteProduct = () => {
 
   const { mutate: deleteProduct, isPending: isLoadingDelete } = useMutation({
     mutationKey: ['delete product'],
+    // серверный роутинг для продукта store/:storeId/products/:productId
     mutationFn: () => productService.deleteProduct(productId),
     onSuccess() {
       queryClient.invalidateQueries({

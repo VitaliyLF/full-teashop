@@ -5,13 +5,13 @@ import toast from 'react-hot-toast'
 
 import { STORE_URL } from '@/config/url.config'
 
-import { productService } from '@/services/product.services'
+import { categoryService } from '@/services/category.services'
 
-import { IProductInput } from '@/shared/types/product.interface'
+import { ICategoryInput } from '@/shared/types/category.interface'
 
-export const useCreateProduct = () => {
+export const useCreateCategory = () => {
   const { storeId } = useParams<{ storeId: string }>()
-  const { push } = useRouter()
+  const router = useRouter()
 
   const queryClient = useQueryClient()
 
@@ -20,23 +20,24 @@ export const useCreateProduct = () => {
   // PUT
   // DELETE
   // useMutation — для изменения данных, то есть POST / PUT / PATCH / DELETE.
-  const { mutate: createProduct, isPending: isLoadingCreate } = useMutation({
+  const { mutate: createCategory, isPending: isLoadingCreate } = useMutation({
     mutationKey: ['create product', storeId],
-    mutationFn: (data: IProductInput) => productService.create(storeId, data),
+    // серверный роутинг для категорий store/:storeId/categories/by-storeId/:id
+    mutationFn: (data: ICategoryInput) => categoryService.create(storeId, data),
     onSuccess() {
-      // после успеха мы обновляет products
+      // после успеха мы обновляет category
       // invalidateQueries чтобы делать инвалидацию - Перезапрос данных вручную с сервера
       // делаем один ключ для инвалидации
       queryClient.invalidateQueries({
-        queryKey: ['get products for store dashboard'],
+        queryKey: ['get categories for store dashboard'],
       })
-      toast.success('Товар создан')
-      push(STORE_URL.products(storeId))
+      toast.success('Категория создана')
+      router.push(STORE_URL.categories(storeId))
     },
     onError() {
-      toast.error('Ошибка при создании продукта')
+      toast.error('Ошибка при создании категории')
     },
   })
 
-  return useMemo(() => ({ createProduct, isLoadingCreate }), [createProduct, isLoadingCreate])
+  return useMemo(() => ({ createCategory, isLoadingCreate }), [createCategory, isLoadingCreate])
 }

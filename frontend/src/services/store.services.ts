@@ -7,10 +7,10 @@ import { IStore, IStoreCreate, IStoreUpdate } from '@/shared/types/store.interfa
 // Все взаимодействия с store могут выполнять только авторизованные пользователи
 
 // метод на получение магазина по id
-const getById = async (id: string) => {
+const getById = async (storeId: string) => {
   const { data } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/by-id/:id
-    url: API_URL.stores(`/by-id/${id}`),
+    url: API_URL.stores(`/by-id/${storeId}`),
     method: 'GET',
   })
 
@@ -30,10 +30,10 @@ const create = async (data: IStoreCreate) => {
 }
 
 // метод на обновление магазина по его id
-const update = async (id: string, data: IStoreUpdate) => {
+const update = async (storeId: string, data: IStoreUpdate) => {
   const { data: updatedStore } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/:id
-    url: API_URL.stores(`/${id}`),
+    url: API_URL.stores(`/${storeId}`),
     method: 'PUT',
     data,
   })
@@ -42,10 +42,10 @@ const update = async (id: string, data: IStoreUpdate) => {
 }
 
 // метод на удаление магазина по id
-const deleteStore = async (id: string) => {
+const deleteStore = async (storeId: string) => {
   const { data: deleteStore } = await axiosWithAuth<IStore>({
     // серверный роутинг для магазина /stores/id
-    url: API_URL.stores(`/${id}`),
+    url: API_URL.stores(`/${storeId}`),
     method: 'DELETE',
   })
 

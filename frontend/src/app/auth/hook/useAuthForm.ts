@@ -70,8 +70,8 @@ export const useAuthForm = (isReg: boolean) => {
   })
 
   // функция обработки формы принимает данные и обрабатывается
-  const onSubmit: SubmitHandler<IAuthForm> = (data) => {
-    mutate(data)
+  const onSubmit: SubmitHandler<IAuthForm> = (formData) => {
+    mutate(formData)
   }
 
   // возвращаем из хука
