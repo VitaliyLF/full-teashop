@@ -9,7 +9,7 @@ import { useGetColors } from '@/hooks/queries/colors/useGetColors'
 
 import { productService } from '@/services/product.services'
 
-import ProductForm from '../components/ProductForm'
+import ProductForm from '../components/ColorForm'
 
 const ProductEdit = ({ productId }: { productId: string }) => {
   // получаю сверху динамический роутинг в компонент но можно и через хук useParams
