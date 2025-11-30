@@ -1,4 +1,3 @@
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, ExternalLink, MoreHorizontal, Pencil } from 'lucide-react'
 import Link from 'next/link'
@@ -9,6 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu'
 
 import { PUBLIC_URL, STORE_URL } from '@/config/url.config'
