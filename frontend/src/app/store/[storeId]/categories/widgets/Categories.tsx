@@ -10,28 +10,23 @@ import DataTableLoading from '@/components/ui/data-table/DataTableLoading'
 
 import { STORE_URL } from '@/config/url.config'
 
-import { useGetColors } from '@/hooks/queries/colors/useGetColors'
-
-import { IColor } from '@/shared/types/color.interface'
+import { useGetCategories } from '@/hooks/queries/categories/useGetCategories'
 
 import { formatDate } from '@/utils/date/format-date'
 
-import { colorsColumns } from './ColorsColumns'
+import { ICategoryColumn, categoryColumns } from '../features/category-form/CategoryColumns'
 
-const Colors = () => {
+const Categories = () => {
   const { storeId } = useParams<{ storeId: string }>()
 
-  const { colors, isLoading } = useGetColors()
+  const { categories, isLoading } = useGetCategories()
 
-  // нужно для вывода в таблицу
-  // приводи в нужный формат наши данные
-  const formattedColors: IColor[] = colors
-    ? colors.map((color) => ({
-        id: color.id,
-        createdAt: formatDate(color.createdAt),
-        name: color.name,
-        value: color.value,
-        storeId: color.storeId,
+  const formattedCategories: ICategoryColumn[] = categories
+    ? categories.map((category) => ({
+        id: category.id || '',
+        createdAt: formatDate(category.createdAt),
+        title: category.title,
+        storeId: category.storeId,
       }))
     : []
 
@@ -42,9 +37,12 @@ const Colors = () => {
       ) : (
         <>
           <div className="header gap-4 h-full flex items-center justify-between border-b pb-4">
-            <Heading title={`Цвета (${colors?.length})`} description="Все цвета вашего магазина" />
+            <Heading
+              title={`Категории (${categories?.length})`}
+              description="Все категории вашего магазина"
+            />
             <div className="buttons">
-              <Link href={STORE_URL.colorsCreate(storeId)}>
+              <Link href={STORE_URL.categoriesCreate(storeId)}>
                 <Button variant="primary">
                   <Plus />
                   Создать
@@ -53,7 +51,7 @@ const Colors = () => {
             </div>
           </div>
           <div className="mt-6">
-            <DataTable columns={colorsColumns} data={formattedColors} filterKey="name" />
+            <DataTable columns={categoryColumns} data={formattedCategories} filterKey="title" />
           </div>
         </>
       )}
@@ -61,4 +59,4 @@ const Colors = () => {
   )
 }
 
-export default Colors
+export default Categories

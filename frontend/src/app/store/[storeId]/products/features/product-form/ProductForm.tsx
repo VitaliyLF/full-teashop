@@ -39,6 +39,7 @@ interface IProductFormProps {
   colors: IColor[]
 }
 
+// features — пользовательские действия / бизнес-операции
 const ProductForm = ({ product, categories, colors }: IProductFormProps) => {
   const { createProduct, isLoadingCreate } = useCreateProduct()
   const { updateProduct, isLoadingUpdate } = useUpdateProduct()

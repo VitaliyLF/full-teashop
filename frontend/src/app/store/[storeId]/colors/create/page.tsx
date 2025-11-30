@@ -2,15 +2,15 @@ import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import CreateProduct from './CreateProduct'
+import CreateColor from './CreateColor'
 
 export const metadata: Metadata = {
-  title: 'Создание Товара',
+  title: 'Создание Цвета',
   ...NO_INDEX_PAGE,
 }
 
-const CreateProductPage = () => {
-  return <CreateProduct />
+const CreateColorPage = () => {
+  return <CreateColor />
 }
 
-export default CreateProductPage
+export default CreateColorPage

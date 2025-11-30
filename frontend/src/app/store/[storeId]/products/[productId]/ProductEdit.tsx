@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'next/navigation'
 
 // import { AxiosError } from 'axios'
 
@@ -9,11 +10,11 @@ import { useGetColors } from '@/hooks/queries/colors/useGetColors'
 
 import { productService } from '@/services/product.services'
 
-import ProductForm from '../components/ProductForm'
+import ProductForm from '../features/product-form/ProductForm'
 
-const ProductEdit = ({ productId }: { productId: string }) => {
+const ProductEdit = () => {
   // получаю сверху динамический роутинг в компонент но можно и через хук useParams
-  // const { productId } = useParams<{ productId: string }>()
+  const { productId } = useParams<{ productId: string }>()
 
   const { categories } = useGetCategories()
   const { colors } = useGetColors()

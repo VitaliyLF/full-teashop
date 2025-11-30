@@ -1,6 +1,6 @@
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal, Pencil } from 'lucide-react'
+import { ArrowUpDown, ExternalLink, MoreHorizontal, Pencil } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/Button'
@@ -11,48 +11,34 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/DropdownMenu'
 
-import { STORE_URL } from '@/config/url.config'
+import { PUBLIC_URL, STORE_URL } from '@/config/url.config'
 
-import { IColor } from '@/shared/types/color.interface'
+export interface ICategoryColumn {
+  id: string
+  createdAt: string
+  title: string
+  storeId: string
+}
 
 // создаем колонки для нашей таблици
 // типизируем ее из библиотки
 // лучше посмотреть как работает библиотека
-export const colorsColumns: ColumnDef<IColor>[] = [
+export const categoryColumns: ColumnDef<ICategoryColumn>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: 'title',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
+          // на клик навешиваем из объекта toggleSorting в который прокидываем функцию getIsSorted
+          // из того же column если равна 'asc' от большего к меньшему сортировка
+          // собственно так будет происходить сортировка по клику
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
           Название
           <ArrowUpDown className="ml-2 size-4" />
         </Button>
       )
     },
-  },
-  {
-    accessorKey: 'value',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Значение
-          <ArrowUpDown className="ml-2 size-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        {row.original.value}
-        <div
-          className="size-6 rounded-full border"
-          style={{ backgroundColor: row.original.value }}
-        />
-      </div>
-    ),
   },
   {
     accessorKey: 'createdAt',
@@ -79,7 +65,15 @@ export const colorsColumns: ColumnDef<IColor>[] = [
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Действия</DropdownMenuLabel>
-          <Link href={STORE_URL.colorsEdit(row.original.storeId, row.original.id)} target="_blank">
+          <Link href={PUBLIC_URL.category(row.original.id)} target="_blank">
+            <DropdownMenuItem>
+              <ExternalLink className="size-4 mr-2" />
+              Страница с категориями
+            </DropdownMenuItem>
+          </Link>
+          <Link
+            href={STORE_URL.categoriesEdit(row.original.storeId, row.original.id)}
+            target="_blank">
             <DropdownMenuItem>
               <Pencil className="size-4 mr-2" />
               Изменить

@@ -1,4 +1,6 @@
 export const formatDate = (dateString: string) => {
+  // вот такой формат
+  // Mon Nov 03 2025 15:24:07 GMT+0300 (Moscow Standard Time)
   const date = new Date(dateString)
 
   // padStart Он добавляет символы в начало строки, пока её длина не станет равной указанной.

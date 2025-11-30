@@ -1,4 +1,4 @@
-import { axiosClassic, axiosWithAuth } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
@@ -16,10 +16,10 @@ const getByStoreId = async (storeId: string) => {
 }
 
 // метод на получение цвета по id
-const getById = async (id: string) => {
-  const { data } = await axiosClassic<IColor>({
+const getById = async (colorId: string) => {
+  const { data } = await axiosWithAuth<IColor>({
     // серверный роутинг для цвета /colors/by-id/id
-    url: API_URL.colors(`/by-id/${id}`),
+    url: API_URL.colors(`/by-id/${colorId}`),
     method: 'GET',
   })
 

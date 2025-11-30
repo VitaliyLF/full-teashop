@@ -31,7 +31,7 @@ import { Input } from '../form-elements/Input'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  // создаем пропс по которому определяем через что у нас будет поиск
+  // создаем пропс по которому определяем через что у нас будет фильтроваться поиск
   filterKey?: string
 }
 
@@ -40,8 +40,6 @@ export function DataTable<TData, TValue>({
   data,
   filterKey,
 }: DataTableProps<TData, TValue>) {
-  'use no memo'
-
   // копируем и заводим состояние для сортировки
   const [sorting, setSorting] = useState<SortingState>([])
 

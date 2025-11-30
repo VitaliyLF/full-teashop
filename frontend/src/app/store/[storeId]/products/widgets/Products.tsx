@@ -14,7 +14,9 @@ import { useGetProducts } from '@/hooks/queries/products/useGetProducts'
 
 import { formatPrice } from '@/utils/string/format-price'
 
-import { IProductColumn, productColumns } from './components/ProductColumns'
+import { IProductColumn, productColumns } from '../features/product-form/ProductColumns'
+
+// widgets — большие блоки страницы
 
 const Products = () => {
   // подучаем динамический параметр storeId

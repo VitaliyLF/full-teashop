@@ -3,7 +3,7 @@
 import { useGetCategories } from '@/hooks/queries/categories/useGetCategories'
 import { useGetColors } from '@/hooks/queries/colors/useGetColors'
 
-import ProductForm from '../components/ProductForm'
+import ProductForm from '../features/product-form/ProductForm'
 
 const CreateProduct = () => {
   const { categories } = useGetCategories()

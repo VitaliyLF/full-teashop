@@ -1,4 +1,4 @@
-import { axiosClassic, axiosWithAuth } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors'
 
 import { API_URL } from '@/config/api.config'
 
@@ -17,7 +17,7 @@ const getByStoreId = async (storeId: string) => {
 
 // метод на получение категории по id
 const getById = async (id: string) => {
-  const { data } = await axiosClassic<ICategory>({
+  const { data } = await axiosWithAuth<ICategory>({
     // серверный роутинг для категорий store/:storeId/categories/by-id/:id
     url: API_URL.categories(`/by-id/${id}`),
     method: 'GET',

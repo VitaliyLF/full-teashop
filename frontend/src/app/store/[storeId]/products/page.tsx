@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import Products from './Products'
+import Products from './widgets/Products'
 
 export const metadata: Metadata = {
   title: 'Товары',

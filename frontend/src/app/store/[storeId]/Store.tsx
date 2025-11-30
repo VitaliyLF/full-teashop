@@ -2,8 +2,8 @@
 
 import Heading from '@/components/ui/Heading'
 
-import MainStatistics from './main-statistics/MainStatistics'
-import MiddleStatistics from './middle-statistics/MiddleStatistics'
+import MainStatistics from './components/main-statistics/MainStatistics'
+import MiddleStatistics from './components/middle-statistics/MiddleStatistics'
 
 const Store = () => {
   return (
