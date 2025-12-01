@@ -27,9 +27,7 @@ export class CategoryController {
   }
 
   // получение по id категории
-  // получать категорию может только авторизованный пользователь
   // обязательно указывает динамический сегмент пути :id
-  @Auth()
   @Get('by-id/:id')
   async getById(@Param('id') id: string) {
     return this.categoryService.getById(id)

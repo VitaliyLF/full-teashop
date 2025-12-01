@@ -41,7 +41,6 @@ export class ProductController {
   }
 
   // получаем продукты по категориям
-  @Auth()
   @Get('by-category/:categoryId')
   async getByCategory(@Param('categoryId') categoryId: string) {
     return this.productService.getByCategory(categoryId)
