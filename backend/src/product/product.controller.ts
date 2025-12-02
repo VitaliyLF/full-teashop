@@ -34,7 +34,6 @@ export class ProductController {
   }
 
   // получаем продукты по id
-  @Auth()
   @Get('by-id/:id')
   async getById(@Param('id') id: string) {
     return this.productService.getById(id)

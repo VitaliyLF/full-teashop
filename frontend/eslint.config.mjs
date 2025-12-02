@@ -12,7 +12,7 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       // запрещает расширяться интерфейсам в ts с пустым значением
       // '@typescript-eslint/no-empty-object-type': 'error',
-      'no-console': 'warn',
+      'no-console': ['error', { allow: 'error' }],
       eqeqeq: 'warn',
       'no-else-return': 'warn',
       'no-var': 'warn',

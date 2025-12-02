@@ -31,7 +31,7 @@ const getByStoreId = async (storeId: string) => {
 
 // метод на получение продукта по id
 const getById = async (productId: string) => {
-  const { data } = await axiosWithAuth<IProduct>({
+  const { data } = await axiosClassic<IProduct>({
     // серверный роутинг для продукта /products/by-id/id
     url: API_URL.products(`/by-id/${productId}`),
     method: 'GET',

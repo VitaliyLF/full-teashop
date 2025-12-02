@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import Dashboard from './components/Dashboard'
+import Dashboard from './widgets/Dashboard'
 
 export const metadata: Metadata = {
   title: 'Личный кабинет',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 const DashboardPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Загрузка...</div>}>
       <Dashboard />
     </Suspense>
   )

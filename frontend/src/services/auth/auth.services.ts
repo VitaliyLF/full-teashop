@@ -40,7 +40,7 @@ const getNewTokens = async () => {
 // Функция на логаут из системы
 const logout = async () => {
   // будет возвращаться boolean Значение
-  const response = await axiosClassic<boolean>({
+  const response = await axiosClassic({
     // по этому url auth/logout возвращает булевое значение
     url: API_URL.auth('/logout'),
     method: 'POST',

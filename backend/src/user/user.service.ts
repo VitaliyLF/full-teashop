@@ -34,7 +34,11 @@ export class UserService {
       include: {
         // возращаем у пользователя все магазины если есть ими созданные, все избранные товары и все заказы
         stores: true,
-        favorites: true,
+        favorites: {
+          include: {
+            category: true
+          }
+        },
         orders: true
       }
     })

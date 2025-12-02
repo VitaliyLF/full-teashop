@@ -8,7 +8,7 @@ import Providers from './providers'
 
 export const metadata: Metadata = {
   title: {
-    absolute: SITE_NAME,
+    default: SITE_NAME,
     // template это через %s уже на каждой странице будет принимать сео title строку
     template: `%s | ${SITE_NAME}`,
   },
