@@ -8,6 +8,7 @@ export class ProductService {
 
   // Метод на получение всех продуктов
   // параметром принимает query параметр (searchTerm - поисковой запрос)
+  // параметр searchTerm имеет value и это value приходит в функцию
   async getAll(searchTerm?: string) {
     // если есть query параметр тогда вызываем функцию фультра по этому параметру
     if (searchTerm) return this.getSearchTermFilter(searchTerm)
@@ -34,11 +35,12 @@ export class ProductService {
       where: {
         // OR в Prisma — это логический оператор для объединения нескольких условий,
         // тут говорим что поиск будет происходить по колонкам в бд либо title либо description
+        // на фронте когда мы в инпуте ищем продукт то мы можем вводить либо title либо description и будет находиться товар
         OR: [
           {
             // поиск будет происходит по title и description колонкам в бд если есть хоть одно слово там найдем нам продукты
             title: {
-              // указываем если в title колонке содержиться слово из query параметра который приходит
+              // указываем если в title колонке продукта содержиться слово из query параметра который приходит
               contains: searchTerm,
               // указываем mode чтобы не зависило от регистра происходил поиск
               mode: 'insensitive'
@@ -46,7 +48,7 @@ export class ProductService {
           },
           {
             description: {
-              // указываем если в title колонке содержиться слово из query параметра который приходит
+              // указываем если в description колонке продукта содержиться слово из query параметра который приходит
               contains: searchTerm,
               mode: 'insensitive'
             }

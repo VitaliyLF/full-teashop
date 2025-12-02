@@ -21,7 +21,7 @@ export class ProductController {
 
   // получение всех продуктов
   @Get()
-  // из query параметра забираем searchTerm и прокидываем в функцию
+  // прокидываем query параметр и называем его как searchTerm и в аргумент прокидывается value этого параметра
   async getAll(@Query('searchTerm') searchTerm?: string) {
     return this.productService.getAll(searchTerm)
   }

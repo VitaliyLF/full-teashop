@@ -32,6 +32,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {product.category.title}
       </Link>
 
+      <p className="line-clamp-2 text-sm text-gray-950">{product.description}</p>
+
       <p className="price mt-1 font-medium text-sm text-gray-900">{formatPrice(product.price)}</p>
     </div>
   )

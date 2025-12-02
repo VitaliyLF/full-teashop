@@ -35,6 +35,8 @@ const Explorer = ({ products }: IExplorerProps) => {
     initialData: products,
   })
 
+  console.log(searchResultsProducts)
+
   return (
     <div className="my-6">
       <Catalog

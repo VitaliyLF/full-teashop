@@ -9,6 +9,7 @@ import { IProduct, IProductInput } from '@/shared/types/product.interface'
 const getAll = async (searchTerm?: string | null) => {
   const { data } = await axiosClassic<IProduct[]>({
     // серверный роутинг для продуктов /products
+    // если есть параметры запрос идет /products?searchTerm=value
     url: API_URL.products(''),
     method: 'GET',
     // если они есть тогда их кладем иначе пустой объект
@@ -37,7 +38,7 @@ const getById = async (productId: string) => {
     method: 'GET',
   })
 
-  return data
+  return data || []
 }
 
 // метод на получение продукта по категории
@@ -48,7 +49,7 @@ const getByCategory = async (categoryId: string) => {
     method: 'GET',
   })
 
-  return data
+  return data || []
 }
 
 // метод на получение самых популярных продуктов
@@ -59,7 +60,7 @@ const getMostPopular = async () => {
     method: 'GET',
   })
 
-  return data
+  return data || []
 }
 
 // метод на получение похожих продуктов
@@ -70,7 +71,7 @@ const getSimilar = async (id: string) => {
     method: 'GET',
   })
 
-  return data
+  return data || []
 }
 
 // метод на создание продукта для магазина

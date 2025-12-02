@@ -33,10 +33,12 @@ const Product = ({ initialProduct, similarProducts, id = '' }: IProductProps) =>
   })
 
   return (
-    <div className="product-page">
-      <div className="content">
-        <ProductGallery product={product} />
-        <ProductInfo product={product} />
+    <div className="product-page mx-auto max-w-7xl">
+      <div className="content space-y-7 px-4 py-10 sm:px-6 lg:px-8">
+        <div className="blocks lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
+          <ProductGallery product={product} />
+          <ProductInfo product={product} />
+        </div>
       </div>
       <Catalog title="Похожие товары" products={similarProducts} />
       <ProductReviews product={product} />
