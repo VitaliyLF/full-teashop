@@ -4,6 +4,7 @@
 export const APP_URL = process.env.APP_URL as string
 
 // Эти Url будут доступны всем публичные
+// это самые корневые страницы наши
 export const PUBLIC_URL = {
   root: (url = '') => `${url ? url : ''}`,
 
@@ -21,6 +22,7 @@ export const PUBLIC_URL = {
 }
 
 // Это url Для юзера
+// это страница dashboard и все выходящие от нее страницы
 export const DASHBOARD_URL = {
   root: (url = '') => `/dashboard${url ? url : ''}`,
 
@@ -33,6 +35,7 @@ export const DASHBOARD_URL = {
 }
 
 // это url Для работы с магазином
+// это страница store и все выходящие от нее страницы
 export const STORE_URL = {
   root: (url = '') => `/store${url ? url : ''}`,
 

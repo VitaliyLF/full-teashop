@@ -10,6 +10,7 @@ import { errorCatch, getContentType } from './api.helper'
 // дефолтные настройки для аксиоса
 // эти настройки чтобы каждый раз не писать, url для запроса контент тайп и тд
 const options: CreateAxiosDefaults = {
+  // куда будут отправляться запросы наш сервер
   baseURL: SERVER_URL,
   // вот тут указыва финкцию которую описали которая возвращает Content-type
   headers: getContentType(),
@@ -30,6 +31,9 @@ export const axiosWithAuth = axios.create(options)
 // у каждого interceptors есть два метода request и response
 // request это запрос и тут при запросе крепим наш Bearer токен
 axiosWithAuth.interceptors.request.use((config) => {
+  // тут лежит очень много параметров от axios
+  // console.log(config)
+
   // получаем accessToken
   const accessToken = getAccessToken()
 
