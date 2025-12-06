@@ -5,7 +5,7 @@ import { API_URL } from '@/config/api.config'
 import { EnumOrderStatus, IPaymentResponse } from '@/shared/types/order.interface'
 
 type TypeData = {
-  status: EnumOrderStatus
+  // status: EnumOrderStatus
   items: {
     quantity: number
     price: number

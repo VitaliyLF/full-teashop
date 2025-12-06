@@ -66,7 +66,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { product } = await getProductWithSimilar(id)
 
+  // по документации лучше указывать путь вот так к корню проекта
+  const metadataBase = new URL(process.env.APP_URL || 'http://localhost:3000')
+
   return {
+    metadataBase,
     title: product.title,
     description: product.description,
     openGraph: {
